@@ -21,7 +21,7 @@ export const account = async ({
 export const accounts = async () => {
   const rawAccounts = await fetch('/api/accounts');
 
-  if (rawAccounts.status === 401) {
+  if (rawAccounts.status === 403) {
     return redirect('/authentication');
   }
 

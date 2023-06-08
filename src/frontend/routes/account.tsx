@@ -14,7 +14,7 @@ import {
 } from '../services/form_validations';
 import { plainToInstance } from 'class-transformer';
 
-export const formValidator: FormValidator = async (
+export const formValidator: FormValidator = (
   formData: FormData,
 ): Promise<ValidationError[]> => {
   const accountValidator = plainToInstance(
@@ -96,6 +96,7 @@ export const NewAccount = () => {
 
   return (
     <Form method="post" onChange={validate}>
+      {JSON.stringify(formErrors)}
       <label htmlFor={'name'}>Name</label>
       <input name="name" />
       {formErrors.name && (

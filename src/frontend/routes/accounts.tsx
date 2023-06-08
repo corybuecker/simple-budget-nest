@@ -20,7 +20,7 @@ const Main = () => {
   );
 };
 
-const ErrorBoundary = () => {
+const Error = () => {
   const error = useRouteError() as { data: unknown };
   const errors = JSON.stringify(error.data, null, 2);
 
@@ -44,17 +44,23 @@ export const Accounts = () => {
 export const accountsRoutes = {
   path: '/accounts',
   element: <Main />,
-  errorElement: <ErrorBoundary />,
   children: [
-    { index: true, element: <Accounts />, loader: accountsLoader },
+    {
+      index: true,
+      element: <Accounts />,
+      loader: accountsLoader,
+      errorElement: <Error />,
+    },
     {
       path: 'new',
       element: <NewAccount />,
+      errorElement: <Error />,
       action: createAccountAction,
     },
     {
       path: ':accountId',
       element: <EditAccount />,
+      errorElement: <Error />,
       loader: accountLoader,
       action: updateAccountAction,
     },

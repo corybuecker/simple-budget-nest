@@ -1,19 +1,17 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
+    "jsx": "react",
     "module": "CommonJS",
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2017"
+    "target": "ES2017",
   },
-  "exclude": ["./src/frontend"],
-  "references": [
-    {
-      "path": "./src/frontend"
-    }
-  ]
+  "include": ["./src"]
 }
