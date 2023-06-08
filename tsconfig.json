@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2017"
+  },
+  "exclude": ["./src/frontend"],
+  "references": [
+    {
+      "path": "./src/frontend"
+    }
+  ]
+}
