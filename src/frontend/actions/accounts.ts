@@ -14,7 +14,7 @@ const create = async ({ request }: ActionFunctionArgs) => {
   });
 
   if (!response.ok) {
-    throw Error('cannot save account');
+    throw response;
   }
 
   return (await response.json()) as FormAccount;
@@ -32,7 +32,7 @@ const update = async ({ request, params }: ActionFunctionArgs) => {
   });
 
   if (!response.ok) {
-    throw Error('cannot save account');
+    throw response;
   }
 
   return (await response.json()) as FormAccount;

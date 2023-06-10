@@ -4,18 +4,12 @@ import {
   IsOptional,
   IsPositive,
   Length,
-  validate,
 } from 'class-validator';
-import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import { Transform } from 'class-transformer';
+import { Injectable } from '@nestjs/common';
 
-export interface FormAccount {
-  name: string;
-  amount: string;
-  debt: boolean;
-}
-
-export class FormAccountValidator {
+@Injectable()
+export class AccountDto {
   @Length(1, 255)
   public name!: string;
 
@@ -28,7 +22,11 @@ export class FormAccountValidator {
   @IsBoolean()
   public debt!: boolean;
 
-  public async validate(): Promise<ValidationError[]> {
-    return validate(this, { whitelist: true, forbidNonWhitelisted: true });
+  public serialize() {
+    return {
+      name: this.name,
+      amount: this.amount,
+      debt: this.debt,
+    };
   }
 }
