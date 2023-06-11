@@ -2,11 +2,7 @@ import { ValidationError } from 'class-validator/types/validation/ValidationErro
 import * as React from 'react';
 import { useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
-import { Account } from '../loaders/accounts';
-import {
-  FormAccount as AccountEntity,
-  FormAccountValidator,
-} from '../form_objects/accounts';
+import { AccountFormObject } from '../form_objects/accounts';
 import {
   buildFormValidator,
   FormError,
@@ -18,7 +14,7 @@ export const formValidator: FormValidator = (
   formData: FormData,
 ): Promise<ValidationError[]> => {
   const accountValidator = plainToInstance(
-    FormAccountValidator,
+    AccountFormObject,
     Object.fromEntries(formData),
   );
 
@@ -26,11 +22,15 @@ export const formValidator: FormValidator = (
 };
 
 export const EditAccount = () => {
-  const account = useLoaderData() as Account;
+  const [formValues, setFormValues] = useState<AccountFormObject>(
+    useLoaderData() as AccountFormObject,
+  );
 
-  const [formErrors, setFormErrors] = useState<FormError<AccountEntity>>({});
+  const [formErrors, setFormErrors] = useState<FormError<AccountFormObject>>(
+    {},
+  );
 
-  const validate = buildFormValidator<AccountEntity>(
+  const validate = buildFormValidator<AccountFormObject>(
     formValidator,
     setFormErrors,
   );
@@ -48,7 +48,14 @@ export const EditAccount = () => {
         <input
           name={'name'}
           id={'name'}
-          defaultValue={account.name}
+          value={formValues.name}
+          onChange={(e) =>
+            setFormValues(
+              Object.assign({}, formValues, {
+                name: e.target.value,
+              }),
+            )
+          }
           className={'border p-2'}
         />
         {formErrors.name && (
@@ -63,7 +70,14 @@ export const EditAccount = () => {
           type={'number'}
           name={'amount'}
           id={'amount'}
-          defaultValue={account.amount}
+          value={formValues.amount}
+          onChange={(e) => {
+            setFormValues(
+              Object.assign({}, formValues, {
+                amount: e.target.value,
+              }),
+            );
+          }}
           className={'border p-2'}
         />
         {formErrors.amount && (
@@ -76,9 +90,19 @@ export const EditAccount = () => {
           type={'checkbox'}
           name={'debt'}
           id={'debt'}
-          defaultChecked={account.debt}
+          checked={formValues.debt}
+          onChange={(e) => {
+            setFormValues(
+              Object.assign({}, formValues, {
+                debt: e.target.checked,
+              }),
+            );
+          }}
           className={'w-4'}
         />
+        {formErrors.debt && (
+          <span className={'bg-amber-200'}>{formErrors.debt}</span>
+        )}
       </div>
       <button disabled={Object.values(formErrors).length > 0} type="submit">
         Save
@@ -87,9 +111,11 @@ export const EditAccount = () => {
   );
 };
 export const NewAccount = () => {
-  const [formErrors, setFormErrors] = useState<FormError<AccountEntity>>({});
+  const [formErrors, setFormErrors] = useState<FormError<AccountFormObject>>(
+    {},
+  );
 
-  const validate = buildFormValidator<AccountEntity>(
+  const validate = buildFormValidator<AccountFormObject>(
     formValidator,
     setFormErrors,
   );

@@ -7,7 +7,6 @@ import session from 'express-session';
 import SessionStore from './sessions/session.store';
 import { Profile } from 'passport-openidconnect';
 import { User as UserModel } from './users/user.model';
-import helmet from 'helmet';
 
 declare module 'express-session' {
   interface SessionData {
@@ -47,22 +46,22 @@ async function bootstrap() {
       saveUninitialized: false,
       cookie: {
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
+        // sameSite: 'strict',
       },
       store: new SessionStore(),
     }),
   );
-  if (process.env.NODE_ENV === 'production') {
-    app.use(
-      helmet({
-        contentSecurityPolicy: {
-          directives: {
-            'script-src': ["'self'", 'ga.jspm.io'],
-          },
-        },
-      }),
-    );
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   app.use(
+  //     helmet({
+  //       contentSecurityPolicy: {
+  //         directives: {
+  //           'script-src': ["'self'", 'ga.jspm.io'],
+  //         },
+  //       },
+  //     }),
+  //   );
+  // }
 
   await app.listen(3000);
 }

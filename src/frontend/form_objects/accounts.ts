@@ -1,7 +1,6 @@
 import {
   IsBoolean,
   IsNumber,
-  IsOptional,
   IsPositive,
   Length,
   validate,
@@ -9,24 +8,24 @@ import {
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import { Transform } from 'class-transformer';
 
-export interface FormAccount {
-  name: string;
-  amount: string;
-  debt: boolean;
-}
+type Checkbox = {
+  value: string | boolean;
+};
 
-export class FormAccountValidator {
+export class AccountFormObject {
   @Length(1, 255)
   public name!: string;
 
   @IsNumber()
   @IsPositive()
-  @Transform(({ value }) => Number(value as unknown))
+  @Transform(({ value }) => Number(value as string))
   public amount!: number;
 
-  @IsOptional()
   @IsBoolean()
-  public debt!: boolean;
+  @Transform(
+    ({ value }: Checkbox) => String(value) === 'true' || String(value) === 'on',
+  )
+  public debt = false;
 
   public async validate(): Promise<ValidationError[]> {
     return validate(this, { whitelist: true, forbidNonWhitelisted: true });

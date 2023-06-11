@@ -1,20 +1,19 @@
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
-import { FormGoal } from '../form_objects/goals';
-
-export type Goal = FormGoal & { id: string };
+import { plainToInstance } from 'class-transformer';
+import { GoalFormObject } from '../form_objects/goals';
 
 export const goal = async ({ params: { goalId } }: LoaderFunctionArgs) => {
   if (!goalId) return;
 
   const response = await fetch(`/api/goals/${goalId}`);
 
-  return (await response.json()) as Goal;
+  return plainToInstance(GoalFormObject, await response.json());
 };
 
 export const goals = async () => {
   const response = await fetch('/api/goals');
 
-  if (response.status === 401) {
+  if (response.status === 403) {
     return redirect('/authentication');
   }
 
@@ -22,5 +21,5 @@ export const goals = async () => {
     throw response;
   }
 
-  return (await response.json()) as Goal[];
+  return plainToInstance(GoalFormObject, await response.json());
 };

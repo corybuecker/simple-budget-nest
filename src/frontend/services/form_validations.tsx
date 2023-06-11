@@ -1,7 +1,6 @@
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
-import { Dispatch, SetStateAction } from 'react';
 import * as React from 'react';
-import { JSX } from 'react';
+import { Dispatch, JSX, SetStateAction } from 'react';
 
 export type FormError<T> =
   | Record<string, never>

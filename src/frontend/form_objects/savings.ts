@@ -2,12 +2,7 @@ import { IsNumber, IsPositive, Length, validate } from 'class-validator';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import { Transform } from 'class-transformer';
 
-export interface FormSaving {
-  name: string;
-  amount: number;
-}
-
-export class FormSavingValidator {
+export class SavingFormObject {
   @Length(1, 255)
   public declare name: string;
 

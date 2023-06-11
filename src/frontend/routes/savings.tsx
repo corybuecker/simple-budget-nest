@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
 import Nav from '../nav';
 import {
-  Saving,
   saving as savingLoader,
   savings as savingsLoader,
 } from '../loaders/savings';
 import { EditSaving, NewSaving } from './saving';
 import { createSavingAction, updateSavingAction } from '../actions/savings';
+import { SavingFormObject } from '../form_objects/savings';
 
 const Main = () => {
   return (
@@ -20,13 +20,13 @@ const Main = () => {
   );
 };
 export const Savings = () => {
-  const savings = useLoaderData() as Saving[];
+  const savings = useLoaderData() as (SavingFormObject & { id: string })[];
   return (
     <div>
       <Link to={'new'}>New</Link>
       {savings.map((saving) => (
         <div key={saving.id}>
-          <Link to={saving.id}>Saving {saving.id}</Link>
+          <Link to={saving.id || ''}>Saving {saving.id}</Link>
         </div>
       ))}
     </div>
@@ -43,17 +43,23 @@ const ErrorBoundary = () => {
 export const savingsRoutes = {
   path: '/savings',
   element: <Main />,
-  errorElement: <ErrorBoundary />,
   children: [
-    { index: true, element: <Savings />, loader: savingsLoader },
+    {
+      index: true,
+      errorElement: <ErrorBoundary />,
+      element: <Savings />,
+      loader: savingsLoader,
+    },
     {
       path: 'new',
       element: <NewSaving />,
+      errorElement: <ErrorBoundary />,
       action: createSavingAction,
     },
     {
       path: ':savingId',
       element: <EditSaving />,
+      errorElement: <ErrorBoundary />,
       loader: savingLoader,
       action: updateSavingAction,
     },

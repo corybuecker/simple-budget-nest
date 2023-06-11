@@ -2,23 +2,20 @@ import { ValidationError } from 'class-validator/types/validation/ValidationErro
 import * as React from 'react';
 import { useState } from 'react';
 import { Form, useLoaderData } from 'react-router-dom';
-import { Saving } from '../loaders/savings';
-import {
-  FormSaving as SavingEntity,
-  FormSavingValidator,
-} from '../form_objects/savings';
+
 import {
   buildFormValidator,
   FormError,
   FormValidator,
 } from '../services/form_validations';
 import { plainToInstance } from 'class-transformer';
+import { SavingFormObject } from '../form_objects/savings';
 
 export const formValidator: FormValidator = async (
   formData: FormData,
 ): Promise<ValidationError[]> => {
   const savingValidator = plainToInstance(
-    FormSavingValidator,
+    SavingFormObject,
     Object.fromEntries(formData),
   );
 
@@ -26,11 +23,13 @@ export const formValidator: FormValidator = async (
 };
 
 export const EditSaving = () => {
-  const saving = useLoaderData() as Saving;
+  const [formValues, setFormValues] = useState<SavingFormObject>(
+    useLoaderData() as SavingFormObject,
+  );
 
-  const [formErrors, setFormErrors] = useState<FormError<SavingEntity>>({});
+  const [formErrors, setFormErrors] = useState<FormError<SavingFormObject>>({});
 
-  const validate = buildFormValidator<SavingEntity>(
+  const validate = buildFormValidator<SavingFormObject>(
     formValidator,
     setFormErrors,
   );
@@ -48,7 +47,12 @@ export const EditSaving = () => {
         <input
           name={'name'}
           id={'name'}
-          defaultValue={saving.name}
+          value={formValues.name}
+          onChange={(e) =>
+            setFormValues(
+              Object.assign({}, formValues, { name: e.target.value }),
+            )
+          }
           className={'border p-2'}
         />
         {formErrors.name && (
@@ -63,7 +67,12 @@ export const EditSaving = () => {
           type={'number'}
           name={'amount'}
           id={'amount'}
-          defaultValue={saving.amount}
+          value={formValues.amount}
+          onChange={(e) =>
+            setFormValues(
+              Object.assign({}, formValues, { amount: Number(e.target.value) }),
+            )
+          }
           className={'border p-2'}
         />
         {formErrors.amount && (
@@ -77,9 +86,9 @@ export const EditSaving = () => {
   );
 };
 export const NewSaving = () => {
-  const [formErrors, setFormErrors] = useState<FormError<SavingEntity>>({});
+  const [formErrors, setFormErrors] = useState<FormError<SavingFormObject>>({});
 
-  const validate = buildFormValidator<SavingEntity>(
+  const validate = buildFormValidator<SavingFormObject>(
     formValidator,
     setFormErrors,
   );

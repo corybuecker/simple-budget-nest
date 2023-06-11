@@ -10,11 +10,11 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { Account } from './account.model';
-import { InjectModel } from '@nestjs/sequelize';
-import { AccountDto } from './account.dto';
 import { SessionGuard } from '../auth/session.guard';
+import { InjectModel } from '@nestjs/sequelize';
+import { Request } from 'express';
+import { Saving } from './saving.model';
+import { SavingDto } from './saving.dto';
 
 const defaultValidationOptions = {
   transform: true,
@@ -22,58 +22,58 @@ const defaultValidationOptions = {
   whitelist: true,
 };
 
-@Controller('/api/accounts')
+@Controller('/api/savings')
 @UseGuards(SessionGuard)
-export class AccountsController {
+export class SavingsController {
   constructor(
-    @InjectModel(Account)
-    private accountModel: typeof Account,
+    @InjectModel(Saving)
+    private savingModel: typeof Saving,
   ) {}
 
   @Get()
   async findAll(@Req() req: Request) {
     const user = req.simpleBudgetUser;
-    return this.accountModel.findAll({ where: { userId: user.id } });
+    return this.savingModel.findAll({ where: { userId: user.id } });
   }
 
   @Get(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async get(@Req() req: Request, @Param('id') id: string) {
     const user = req.simpleBudgetUser;
-    const account = await this.accountModel.findOne({
+    const saving = await this.savingModel.findOne({
       where: { userId: user.id, id: id },
     });
 
-    if (!account) {
-      throw 'missing account';
+    if (!saving) {
+      throw 'missing saving';
     }
 
-    return account;
+    return saving;
   }
 
   @Post()
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async create(@Req() req: Request, @Body() accountDto: AccountDto) {
+  async create(@Req() req: Request, @Body() savingDto: SavingDto) {
     const user = req.simpleBudgetUser;
-    return await user.$create<Account>('account', accountDto.serialize());
+    return await user.$create<Saving>('saving', savingDto.serialize());
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async update(
     @Req() req: Request,
-    @Body() accountDto: AccountDto,
+    @Body() savingDto: SavingDto,
     @Param('id') id: string,
   ) {
     const user = req.simpleBudgetUser;
-    const account = await this.accountModel.findOne({
+    const saving = await this.savingModel.findOne({
       where: { userId: user.id, id: id },
     });
 
-    if (!account) {
-      throw 'missing account';
+    if (!saving) {
+      throw 'missing saving';
     }
 
-    return await account.update(accountDto.serialize());
+    return await saving.update(savingDto.serialize());
   }
 }
