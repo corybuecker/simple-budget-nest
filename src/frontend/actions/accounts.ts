@@ -1,12 +1,13 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import { FormAccount, FormAccountValidator } from '../form_objects/accounts';
+import { AccountFormObject } from '../form_objects/accounts';
 import { plainToInstance } from 'class-transformer';
 
 const create = async ({ request }: ActionFunctionArgs) => {
   const data = plainToInstance(
-    FormAccountValidator,
+    AccountFormObject,
     Object.fromEntries(await request.formData()),
   );
+
   const response = await fetch(`/api/accounts`, {
     method: 'post',
     body: JSON.stringify(data),
@@ -17,7 +18,7 @@ const create = async ({ request }: ActionFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as FormAccount;
+  return plainToInstance(AccountFormObject, await response.json());
 };
 
 const update = async ({ request, params }: ActionFunctionArgs) => {
@@ -25,9 +26,12 @@ const update = async ({ request, params }: ActionFunctionArgs) => {
     throw Error('missing account ID');
   }
 
+  const formValues = Object.fromEntries(await request.formData());
+  const data = plainToInstance(AccountFormObject, formValues);
+
   const response = await fetch(`/api/accounts/${params.accountId}`, {
     method: 'put',
-    body: JSON.stringify(Object.fromEntries(await request.formData())),
+    body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' },
   });
 
@@ -35,7 +39,7 @@ const update = async ({ request, params }: ActionFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as FormAccount;
+  return plainToInstance(AccountFormObject, await response.json());
 };
 
 export { create as createAccountAction, update as updateAccountAction };

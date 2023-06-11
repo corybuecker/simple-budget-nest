@@ -3,11 +3,11 @@ import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
 import { createAccountAction, updateAccountAction } from '../actions/accounts';
 import {
   account as accountLoader,
-  Account,
   accounts as accountsLoader,
 } from '../loaders/accounts';
 import Nav from '../nav';
 import { EditAccount, NewAccount } from './account';
+import { AccountFormObject } from '../form_objects/accounts';
 
 const Main = () => {
   return (
@@ -20,7 +20,7 @@ const Main = () => {
   );
 };
 
-const Error = () => {
+const ErrorBoundary = () => {
   const error = useRouteError() as { data: unknown };
   const errors = JSON.stringify(error.data, null, 2);
 
@@ -28,7 +28,7 @@ const Error = () => {
 };
 
 export const Accounts = () => {
-  const accounts = useLoaderData() as Account[];
+  const accounts = useLoaderData() as (AccountFormObject & { id: string })[];
   return (
     <div>
       <Link to={'new'}>New</Link>
@@ -49,18 +49,18 @@ export const accountsRoutes = {
       index: true,
       element: <Accounts />,
       loader: accountsLoader,
-      errorElement: <Error />,
+      errorElement: <ErrorBoundary />,
     },
     {
       path: 'new',
       element: <NewAccount />,
-      errorElement: <Error />,
+      errorElement: <ErrorBoundary />,
       action: createAccountAction,
     },
     {
       path: ':accountId',
       element: <EditAccount />,
-      errorElement: <Error />,
+      errorElement: <ErrorBoundary />,
       loader: accountLoader,
       action: updateAccountAction,
     },

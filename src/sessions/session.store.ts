@@ -37,16 +37,13 @@ export default class SessionStore extends Store {
     }
   }
   public destroy(sid: string, callback?: (err?: unknown) => void) {
-    console.log(sid);
     callback && callback();
   }
 
-  private async findUnexpiredSession(sid: string): Promise<Session | null> {
-    const session = await Session.findOne({
+  private async findUnexpiredSession(sid: string) {
+    return Session.findOne({
       where: { sessionId: sid, expiredAt: { [Op.gt]: new Date() } },
     });
-
-    return session;
   }
 
   private async upsertSession(sid: string, sessionData: SessionData) {
@@ -54,18 +51,17 @@ export default class SessionStore extends Store {
     const newExpiration = new Date(currentTime.getTime() + SESSION_LIFETIME);
 
     const existingSession = await this.findUnexpiredSession(sid);
+
     if (!existingSession) {
-      const session = await Session.create({
+      return Session.create({
         sessionId: sid,
         json: sessionData,
         expiredAt: newExpiration,
       });
-      return session;
     } else {
       existingSession.json = sessionData;
       existingSession.expiredAt = newExpiration;
-      await existingSession.save();
-      return existingSession;
+      return existingSession.save();
     }
   }
 }

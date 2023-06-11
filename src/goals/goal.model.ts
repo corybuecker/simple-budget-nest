@@ -49,7 +49,7 @@ export class Goal extends Model {
   })
   declare recurrence: GoalRecurrence;
 
-  @Column({ allowNull: true })
+  @Column({ allowNull: true, type: DataType.DATE })
   declare targetDate: Date;
 
   @BelongsTo(() => User, 'userId')

@@ -1,7 +1,6 @@
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
-import { FormSaving } from '../form_objects/savings';
-
-export type Saving = FormSaving & { id: string };
+import { SavingFormObject } from '../form_objects/savings';
+import { plainToInstance } from 'class-transformer';
 
 export const saving = async ({ params: { savingId } }: LoaderFunctionArgs) => {
   if (!savingId) return;
@@ -12,13 +11,13 @@ export const saving = async ({ params: { savingId } }: LoaderFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as Saving;
+  return plainToInstance(SavingFormObject, await response.json());
 };
 
 export const savings = async () => {
   const response = await fetch('/api/savings');
 
-  if (response.status === 401) {
+  if (response.status === 403) {
     return redirect('/authentication');
   }
 
@@ -26,5 +25,5 @@ export const savings = async () => {
     throw response;
   }
 
-  return (await response.json()) as Saving[];
+  return plainToInstance(SavingFormObject, await response.json());
 };

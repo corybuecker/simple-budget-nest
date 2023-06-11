@@ -1,5 +1,6 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import { FormGoal } from '../form_objects/goals';
+import { plainToInstance } from 'class-transformer';
+import { GoalFormObject } from '../form_objects/goals';
 
 const create = async ({ request }: ActionFunctionArgs) => {
   const response = await fetch(`/api/goals`, {
@@ -12,7 +13,7 @@ const create = async ({ request }: ActionFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as FormGoal;
+  return plainToInstance(GoalFormObject, await response.json());
 };
 
 const update = async ({ request, params }: ActionFunctionArgs) => {
@@ -28,7 +29,7 @@ const update = async ({ request, params }: ActionFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as FormGoal;
+  return plainToInstance(GoalFormObject, await response.json());
 };
 
 export { create as createGoalAction, update as updateGoalAction };

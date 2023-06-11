@@ -1,5 +1,6 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import { FormSaving } from '../form_objects/savings';
+import { SavingFormObject } from '../form_objects/savings';
+import { plainToInstance } from 'class-transformer';
 
 const create = async ({ request }: ActionFunctionArgs) => {
   const response = await fetch(`/api/savings`, {
@@ -12,7 +13,7 @@ const create = async ({ request }: ActionFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as FormSaving;
+  return plainToInstance(SavingFormObject, await response.json());
 };
 
 const update = async ({ request, params }: ActionFunctionArgs) => {
@@ -28,7 +29,7 @@ const update = async ({ request, params }: ActionFunctionArgs) => {
     throw response;
   }
 
-  return (await response.json()) as FormSaving;
+  return plainToInstance(SavingFormObject, await response.json());
 };
 
 export { create as createSavingAction, update as updateSavingAction };

@@ -10,11 +10,11 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { Account } from './account.model';
-import { InjectModel } from '@nestjs/sequelize';
-import { AccountDto } from './account.dto';
 import { SessionGuard } from '../auth/session.guard';
+import { InjectModel } from '@nestjs/sequelize';
+import { Goal } from './goal.model';
+import { Request } from 'express';
+import { GoalDto } from './goal.dto';
 
 const defaultValidationOptions = {
   transform: true,
@@ -22,58 +22,58 @@ const defaultValidationOptions = {
   whitelist: true,
 };
 
-@Controller('/api/accounts')
+@Controller('/api/goals')
 @UseGuards(SessionGuard)
-export class AccountsController {
+export class GoalsController {
   constructor(
-    @InjectModel(Account)
-    private accountModel: typeof Account,
+    @InjectModel(Goal)
+    private goalModel: typeof Goal,
   ) {}
 
   @Get()
   async findAll(@Req() req: Request) {
     const user = req.simpleBudgetUser;
-    return this.accountModel.findAll({ where: { userId: user.id } });
+    return this.goalModel.findAll({ where: { userId: user.id } });
   }
 
   @Get(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async get(@Req() req: Request, @Param('id') id: string) {
     const user = req.simpleBudgetUser;
-    const account = await this.accountModel.findOne({
+    const goal = await this.goalModel.findOne({
       where: { userId: user.id, id: id },
     });
 
-    if (!account) {
-      throw 'missing account';
+    if (!goal) {
+      throw 'missing goal';
     }
 
-    return account;
+    return goal;
   }
 
   @Post()
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async create(@Req() req: Request, @Body() accountDto: AccountDto) {
+  async create(@Req() req: Request, @Body() goalDto: GoalDto) {
     const user = req.simpleBudgetUser;
-    return await user.$create<Account>('account', accountDto.serialize());
+    return await user.$create<Goal>('goal', goalDto.serialize());
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async update(
     @Req() req: Request,
-    @Body() accountDto: AccountDto,
+    @Body() goalDto: GoalDto,
     @Param('id') id: string,
   ) {
     const user = req.simpleBudgetUser;
-    const account = await this.accountModel.findOne({
+    const goal = await this.goalModel.findOne({
       where: { userId: user.id, id: id },
     });
 
-    if (!account) {
-      throw 'missing account';
+    if (!goal) {
+      throw 'missing goal';
     }
 
-    return await account.update(accountDto.serialize());
+    return await goal.update(goalDto.serialize());
   }
 }
