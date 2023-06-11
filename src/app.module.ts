@@ -15,6 +15,7 @@ import { SessionsModule } from './sessions/sessions.module';
       autoLoadModels: true,
       synchronize: true,
       logQueryParameters: true,
+      sync: { alter: true },
     }),
     AccountsModule,
     SavingsModule,

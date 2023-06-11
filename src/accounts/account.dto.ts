@@ -1,10 +1,4 @@
-import {
-  IsBoolean,
-  IsNumber,
-  IsOptional,
-  IsPositive,
-  Length,
-} from 'class-validator';
+import { IsBoolean, IsNumber, IsPositive, Length } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
 
@@ -18,7 +12,6 @@ export class AccountDto {
   @Transform(({ value }) => Number(value as unknown))
   public amount!: number;
 
-  @IsOptional()
   @IsBoolean()
   public debt!: boolean;
 
