@@ -81,7 +81,10 @@ export const EditGoal = () => {
           id={'amount'}
           onChange={(e) =>
             setFormValues(
-              Object.assign({}, formValues, { amount: e.target.value }),
+              plainToInstance(
+                GoalFormObject,
+                Object.assign({}, formValues, { amount: e.target.value }),
+              ),
             )
           }
           value={formValues.amount}
@@ -101,14 +104,17 @@ export const EditGoal = () => {
           id={'targetDate'}
           onChange={(e) =>
             setFormValues(
-              Object.assign({}, formValues, { targetDate: e.target.value }),
+              plainToInstance(
+                GoalFormObject,
+                Object.assign({}, formValues, { targetDate: e.target.value }),
+              ),
             )
           }
           value={targetDateFormValue}
           className={'border p-2'}
         />
-        {formErrors.amount && (
-          <span className={'bg-amber-200'}>{formErrors.amount}</span>
+        {formErrors.targetDate && (
+          <span className={'bg-amber-200'}>{formErrors.targetDate}</span>
         )}
       </div>
       <select
