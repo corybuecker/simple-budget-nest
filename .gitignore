@@ -59,13 +59,13 @@ yarn-error.log
 tests/baselines/reference/dt
 .failed-tests
 TEST-results.xml
-package-lock.json
 .eslintcache
 *v8.log
 lib/
 dist/
 public/**/*
 .env
-src/frontend/**/*.js
-src/frontend/tsconfig.tsbuildinfo
-src/frontend/**/*.d.ts
+src/**/*.js
+src/**/*.d.ts
+src/tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
