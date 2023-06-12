@@ -15,10 +15,11 @@ import { Account } from './account.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { AccountDto } from './account.dto';
 import { SessionGuard } from '../auth/session.guard';
+import { User } from '../users/user.model';
 
 const defaultValidationOptions = {
-  transform: true,
   forbidNonWhitelisted: true,
+  transform: true,
   whitelist: true,
 };
 
@@ -28,52 +29,49 @@ export class AccountsController {
   constructor(
     @InjectModel(Account)
     private accountModel: typeof Account,
+
+    @InjectModel(User)
+    private userModel: typeof User,
   ) {}
 
   @Get()
-  async findAll(@Req() req: Request) {
-    const user = req.simpleBudgetUser;
-    return this.accountModel.findAll({ where: { userId: user.id } });
+  async findAll(@Req() { userId }: Request): Promise<Account[]> {
+    return this.accountModel.findAll({ where: { userId } });
   }
 
   @Get(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async get(@Req() req: Request, @Param('id') id: string) {
-    const user = req.simpleBudgetUser;
-    const account = await this.accountModel.findOne({
-      where: { userId: user.id, id: id },
+  async get(@Req() { userId }: Request, @Param('id') id: string) {
+    return await this.accountModel.findOne({
+      where: { userId, id: id },
+      rejectOnEmpty: true,
     });
-
-    if (!account) {
-      throw 'missing account';
-    }
-
-    return account;
   }
 
   @Post()
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async create(@Req() req: Request, @Body() accountDto: AccountDto) {
-    const user = req.simpleBudgetUser;
+  async create(@Req() { userId }: Request, @Body() accountDto: AccountDto) {
+    const user = await this.userModel.findOne({
+      where: { id: userId },
+      rejectOnEmpty: true,
+    });
+
     return await user.$create<Account>('account', accountDto.serialize());
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async update(
-    @Req() req: Request,
+    @Req() { userId }: Request,
     @Body() accountDto: AccountDto,
     @Param('id') id: string,
   ) {
-    const user = req.simpleBudgetUser;
     const account = await this.accountModel.findOne({
-      where: { userId: user.id, id: id },
+      where: { userId, id: id },
+      rejectOnEmpty: true,
     });
 
-    if (!account) {
-      throw 'missing account';
-    }
-
-    return await account.update(accountDto.serialize());
+    account.setAttributes(accountDto.serialize());
+    return await account.save();
   }
 }

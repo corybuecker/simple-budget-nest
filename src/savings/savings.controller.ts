@@ -15,6 +15,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Request } from 'express';
 import { Saving } from './saving.model';
 import { SavingDto } from './saving.dto';
+import { User } from '../users/user.model';
 
 const defaultValidationOptions = {
   transform: true,
@@ -28,52 +29,49 @@ export class SavingsController {
   constructor(
     @InjectModel(Saving)
     private savingModel: typeof Saving,
+
+    @InjectModel(User)
+    private userModel: typeof User,
   ) {}
 
   @Get()
-  async findAll(@Req() req: Request) {
-    const user = req.simpleBudgetUser;
-    return this.savingModel.findAll({ where: { userId: user.id } });
+  async findAll(@Req() { userId }: Request): Promise<Saving[]> {
+    return this.savingModel.findAll({ where: { userId: userId } });
   }
 
   @Get(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async get(@Req() req: Request, @Param('id') id: string) {
-    const user = req.simpleBudgetUser;
-    const saving = await this.savingModel.findOne({
-      where: { userId: user.id, id: id },
+  async get(@Req() { userId }: Request, @Param('id') id: string) {
+    return this.savingModel.findOne({
+      where: { userId, id },
+      rejectOnEmpty: true,
     });
-
-    if (!saving) {
-      throw 'missing saving';
-    }
-
-    return saving;
   }
 
   @Post()
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async create(@Req() req: Request, @Body() savingDto: SavingDto) {
-    const user = req.simpleBudgetUser;
-    return await user.$create<Saving>('saving', savingDto.serialize());
+  async create(@Req() { userId }: Request, @Body() savingDto: SavingDto) {
+    const user = await this.userModel.findOne({
+      where: { id: userId },
+      rejectOnEmpty: true,
+    });
+
+    return user.$create<Saving>('saving', savingDto.serialize());
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async update(
-    @Req() req: Request,
+    @Req() { userId }: Request,
     @Body() savingDto: SavingDto,
     @Param('id') id: string,
   ) {
-    const user = req.simpleBudgetUser;
     const saving = await this.savingModel.findOne({
-      where: { userId: user.id, id: id },
+      where: { userId, id },
+      rejectOnEmpty: true,
     });
 
-    if (!saving) {
-      throw 'missing saving';
-    }
-
-    return await saving.update(savingDto.serialize());
+    saving.setAttributes(savingDto.serialize());
+    return saving.save();
   }
 }

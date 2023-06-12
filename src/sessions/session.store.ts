@@ -36,6 +36,17 @@ export default class SessionStore extends Store {
       return callback && callback(e);
     }
   }
+
+  public async touch(
+    sid: string,
+    session: SessionData,
+    callback?: (err?: unknown) => void,
+  ) {
+    await this.touchSession(sid);
+
+    return callback && callback(null);
+  }
+
   public destroy(sid: string, callback?: (err?: unknown) => void) {
     callback && callback();
   }
@@ -44,6 +55,18 @@ export default class SessionStore extends Store {
     return Session.findOne({
       where: { sessionId: sid, expiredAt: { [Op.gt]: new Date() } },
     });
+  }
+
+  private async touchSession(sid: string) {
+    const currentTime = new Date();
+    const newExpiration = new Date(currentTime.getTime() + SESSION_LIFETIME);
+
+    const existingSession = await this.findUnexpiredSession(sid);
+
+    if (existingSession) {
+      existingSession.expiredAt = newExpiration;
+      return existingSession.save();
+    }
   }
 
   private async upsertSession(sid: string, sessionData: SessionData) {

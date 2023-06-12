@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import session from 'express-session';
 import SessionStore from './sessions/session.store';
 import { Profile } from 'passport-openidconnect';
-import { User as UserModel } from './users/user.model';
+import helmet from 'helmet';
 
 declare module 'express-session' {
   interface SessionData {
@@ -18,7 +18,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
-      simpleBudgetUser: UserModel;
+      userId: string;
     }
   }
 }
@@ -45,23 +45,21 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        // sameSite: 'strict',
+        // secure: true,
+        sameSite: 'lax',
       },
       store: new SessionStore(),
     }),
   );
-  // if (process.env.NODE_ENV === 'production') {
-  //   app.use(
-  //     helmet({
-  //       contentSecurityPolicy: {
-  //         directives: {
-  //           'script-src': ["'self'", 'ga.jspm.io'],
-  //         },
-  //       },
-  //     }),
-  //   );
-  // }
+  app.use(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          'script-src': ["'self'", "'nonce-9k27shj183Hs1'", 'ga.jspm.io'],
+        },
+      },
+    }),
+  );
 
   await app.listen(3000);
 }

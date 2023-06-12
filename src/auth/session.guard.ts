@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../users/user.model';
@@ -10,19 +15,18 @@ export class SessionGuard implements CanActivate {
     const httpContext = context.switchToHttp();
     const request = httpContext.getRequest<Request>();
 
-    if (request.session.profile) {
-      const emails = request?.session?.profile?.emails;
-      if (emails) {
-        const user = await this.userModel.findOne({
-          where: { email: emails.length > 0 ? emails[0].value : null },
-        });
-        if (user) {
-          request.simpleBudgetUser = user;
-        }
-      }
+    const emails = request?.session?.profile?.emails;
+
+    if (emails) {
+      const user = await this.userModel.findOne({
+        where: { email: emails[0].value },
+      });
+
+      if (!user) throw new ForbiddenException();
+
+      request.userId = user.id;
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 }

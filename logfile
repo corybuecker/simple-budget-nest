@@ -1,0 +1,69 @@
+2023-06-11 21:49:45.897 CDT [36651] LOG:  starting PostgreSQL 14.8 (Homebrew) on aarch64-apple-darwin22.4.0, compiled by Apple clang version 14.0.3 (clang-1403.0.22.14.1), 64-bit
+2023-06-11 21:49:45.898 CDT [36651] LOG:  could not bind IPv6 address "::1": Address already in use
+2023-06-11 21:49:45.898 CDT [36651] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2023-06-11 21:49:45.898 CDT [36651] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2023-06-11 21:49:45.898 CDT [36651] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2023-06-11 21:49:45.898 CDT [36651] WARNING:  could not create listen socket for "localhost"
+2023-06-11 21:49:45.898 CDT [36651] FATAL:  could not create any TCP/IP sockets
+2023-06-11 21:49:45.899 CDT [36651] LOG:  database system is shut down
+2023-06-11 21:49:52.796 CDT [36688] LOG:  starting PostgreSQL 14.8 (Homebrew) on aarch64-apple-darwin22.4.0, compiled by Apple clang version 14.0.3 (clang-1403.0.22.14.1), 64-bit
+2023-06-11 21:49:52.796 CDT [36688] LOG:  listening on IPv6 address "::1", port 5432
+2023-06-11 21:49:52.796 CDT [36688] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-11 21:49:52.799 CDT [36688] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-11 21:49:52.806 CDT [36689] LOG:  database system was shut down at 2023-06-11 21:27:40 CDT
+2023-06-11 21:49:52.810 CDT [36688] LOG:  database system is ready to accept connections
+2023-06-11 22:08:11.630 CDT [38870] LOG:  could not receive data from client: Connection reset by peer
+2023-06-12 07:13:06.599 CDT [47190] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:09.613 CDT [47192] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:12.624 CDT [47194] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:15.636 CDT [47195] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:18.161 CDT [47296] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:21.177 CDT [47297] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:24.185 CDT [47298] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:27.198 CDT [47299] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:30.209 CDT [47300] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:33.229 CDT [47301] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:33.889 CDT [47304] FATAL:  lock file "postmaster.pid" already exists
+2023-06-12 07:13:33.889 CDT [47304] HINT:  Is another postmaster (PID 36688) running in data directory "/opt/homebrew/var/postgresql@14"?
+2023-06-12 07:13:36.247 CDT [47320] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:39.263 CDT [47322] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:13:39.647 CDT [36688] LOG:  received fast shutdown request
+2023-06-12 07:13:39.647 CDT [36688] LOG:  aborting any active transactions
+2023-06-12 07:13:39.648 CDT [36688] LOG:  background worker "logical replication launcher" (PID 36695) exited with exit code 1
+2023-06-12 07:13:39.648 CDT [36690] LOG:  shutting down
+2023-06-12 07:13:39.657 CDT [36688] LOG:  database system is shut down
+2023-06-12 07:13:40.974 CDT [47341] LOG:  starting PostgreSQL 14.8 (Homebrew) on aarch64-apple-darwin22.4.0, compiled by Apple clang version 14.0.3 (clang-1403.0.22.14.1), 64-bit
+2023-06-12 07:13:40.975 CDT [47341] LOG:  listening on IPv6 address "::1", port 5432
+2023-06-12 07:13:40.975 CDT [47341] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-06-12 07:13:40.975 CDT [47341] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-06-12 07:13:40.978 CDT [47342] LOG:  database system was shut down at 2023-06-12 07:13:39 CDT
+2023-06-12 07:13:40.980 CDT [47341] LOG:  database system is ready to accept connections
+2023-06-12 07:13:42.275 CDT [47364] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:11.968 CDT [47463] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:14.980 CDT [47464] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:17.988 CDT [47466] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:21.001 CDT [47467] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:24.016 CDT [47468] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:27.024 CDT [47469] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:30.479 CDT [47563] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:33.504 CDT [47564] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:36.520 CDT [47565] FATAL:  database "simple_budget" does not exist
+2023-06-12 07:14:39.535 CDT [47582] FATAL:  database "simple_budget" does not exist
+2023-06-14 19:58:14.343 CDT [61911] ERROR:  invalid input syntax for type uuid: "gen_random_uuid()" at character 54
+2023-06-14 19:58:14.343 CDT [61911] STATEMENT:  INSERT INTO "public"."Users" ("id", "email") VALUES ('gen_random_uuid()', 'cory.buecker@gmail.com');
+2023-06-14 20:02:13.856 CDT [63251] LOG:  could not receive data from client: Connection reset by peer
+2023-06-14 20:16:04.691 CDT [68594] ERROR:  column "user" of relation "Accounts" contains null values
+2023-06-14 20:16:04.691 CDT [68594] STATEMENT:  ALTER TABLE "public"."Accounts" ADD COLUMN "user" UUID NOT NULL;
+2023-06-14 20:16:07.773 CDT [68601] ERROR:  column "user" of relation "Accounts" contains null values
+2023-06-14 20:16:07.773 CDT [68601] STATEMENT:  ALTER TABLE "public"."Accounts" ADD COLUMN "user" UUID NOT NULL;
+2023-06-14 20:16:10.855 CDT [68609] ERROR:  column "user" of relation "Accounts" contains null values
+2023-06-14 20:16:10.855 CDT [68609] STATEMENT:  ALTER TABLE "public"."Accounts" ADD COLUMN "user" UUID NOT NULL;
+2023-06-14 20:16:13.922 CDT [68612] ERROR:  column "user" of relation "Accounts" contains null values
+2023-06-14 20:16:13.922 CDT [68612] STATEMENT:  ALTER TABLE "public"."Accounts" ADD COLUMN "user" UUID NOT NULL;
+2023-06-14 20:16:16.999 CDT [68619] ERROR:  column "user" of relation "Accounts" contains null values
+2023-06-14 20:16:16.999 CDT [68619] STATEMENT:  ALTER TABLE "public"."Accounts" ADD COLUMN "user" UUID NOT NULL;
+2023-06-14 20:16:20.068 CDT [68622] ERROR:  column "user" of relation "Accounts" contains null values
+2023-06-14 20:16:20.068 CDT [68622] STATEMENT:  ALTER TABLE "public"."Accounts" ADD COLUMN "user" UUID NOT NULL;
+2023-06-14 20:32:25.546 CDT [70970] ERROR:  database "simple_budget" is being accessed by other users
+2023-06-14 20:32:25.546 CDT [70970] DETAIL:  There is 1 other session using the database.
+2023-06-14 20:32:25.546 CDT [70970] STATEMENT:  DROP DATABASE simple_budget;
