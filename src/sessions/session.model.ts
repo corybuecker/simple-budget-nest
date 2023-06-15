@@ -1,3 +1,4 @@
+import { SessionData } from 'express-session';
 import {
   Column,
   CreatedAt,
@@ -8,7 +9,6 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
-import { SessionData } from 'express-session';
 
 @Table({ paranoid: true })
 export class Session extends Model {

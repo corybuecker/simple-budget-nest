@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AccountsModule } from './accounts/accounts.module';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { SavingsModule } from './savings/savings.module';
-import { GoalsModule } from './goals/goals.module';
-import { DashboardModule } from './dashboard/dashboard.module';
+import { AccountsModule } from './accounts/accounts.module';
 import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { GoalsModule } from './goals/goals.module';
+import { SavingsModule } from './savings/savings.module';
 import { SessionsModule } from './sessions/sessions.module';
 
 @Module({
@@ -23,7 +23,6 @@ import { SessionsModule } from './sessions/sessions.module';
       database: 'simple_budget',
       autoLoadModels: true,
       synchronize: true,
-      logQueryParameters: true,
       sync: { alter: true },
     }),
   ],

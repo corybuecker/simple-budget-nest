@@ -13,8 +13,8 @@ import {
   UpdatedAt,
 } from 'sequelize-typescript';
 import { Account } from '../accounts/account.model';
-import { Saving } from '../savings/saving.model';
 import { Goal } from '../goals/goal.model';
+import { Saving } from '../savings/saving.model';
 
 @Table({ paranoid: true })
 export class User extends Model {
