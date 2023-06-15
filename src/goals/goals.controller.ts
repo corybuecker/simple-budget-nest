@@ -56,7 +56,7 @@ export class GoalsController {
       rejectOnEmpty: true,
     });
 
-    return await user.$create<Goal>('goal', goalDto.serialize());
+    return await user.$create<Goal>('goal', goalDto);
   }
 
   @Put(':id')
@@ -71,7 +71,7 @@ export class GoalsController {
       rejectOnEmpty: true,
     });
 
-    goal.setAttributes(goalDto.serialize());
+    goal.setAttributes(goalDto);
     return goal.save();
   }
 }

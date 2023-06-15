@@ -14,7 +14,7 @@ const strategyOptions: StrategyOptions = {
   userInfoURL: 'https://openidconnect.googleapis.com/v1/userinfo',
   clientID: process.env.CLIENT_ID || '',
   clientSecret: process.env.CLIENT_SECRET || '',
-  scope: ['openid email profile'],
+  scope: ['openid email'],
 };
 
 @Injectable()

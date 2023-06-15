@@ -4,14 +4,24 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "jsx": "react",
     "module": "CommonJS",
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2017",
+    "target": "ES2022"
   },
-  "include": ["./src"]
+  "include": [
+    "./src"
+  ],
+  "exclude": [
+    "./src/frontend"
+  ],
+  "references": [
+    {
+      "path": "./src/frontend"
+    }
+  ]
 }

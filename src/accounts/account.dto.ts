@@ -14,12 +14,4 @@ export class AccountDto {
 
   @IsBoolean()
   public debt!: boolean;
-
-  public serialize() {
-    return {
-      name: this.name,
-      amount: this.amount,
-      debt: this.debt,
-    };
-  }
 }

@@ -9,23 +9,23 @@ import { SessionsModule } from './sessions/sessions.module';
 
 @Module({
   imports: [
+    AccountsModule,
+    AuthModule,
+    DashboardModule,
+    GoalsModule,
+    SavingsModule,
+    SessionsModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: process.env.DATABASE_HOST,
-      username: process.env.DATABASE_USERNAME,
-      password: process.env.DATABASE_PASSWORD,
+      host: process.env.DATABASE_HOST || '',
+      username: process.env.DATABASE_USERNAME || '',
+      password: process.env.DATABASE_PASSWORD || '',
       database: 'simple_budget',
       autoLoadModels: true,
       synchronize: true,
       logQueryParameters: true,
       sync: { alter: true },
     }),
-    AccountsModule,
-    SavingsModule,
-    GoalsModule,
-    DashboardModule,
-    AuthModule,
-    SessionsModule,
   ],
 })
 export class AppModule {}

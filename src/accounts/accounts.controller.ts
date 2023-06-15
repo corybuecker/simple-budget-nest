@@ -56,7 +56,7 @@ export class AccountsController {
       rejectOnEmpty: true,
     });
 
-    return await user.$create<Account>('account', accountDto.serialize());
+    return await user.$create<Account>('account', accountDto);
   }
 
   @Put(':id')
@@ -71,7 +71,7 @@ export class AccountsController {
       rejectOnEmpty: true,
     });
 
-    account.setAttributes(accountDto.serialize());
+    account.setAttributes(accountDto);
     return await account.save();
   }
 }

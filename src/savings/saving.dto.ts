@@ -11,11 +11,4 @@ export class SavingDto {
   @IsPositive()
   @Transform(({ value }) => Number(value as unknown))
   public amount!: number;
-
-  public serialize() {
-    return {
-      name: this.name,
-      amount: this.amount,
-    };
-  }
 }
