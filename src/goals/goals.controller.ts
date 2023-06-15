@@ -15,10 +15,11 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Goal } from './goal.model';
 import { Request } from 'express';
 import { GoalDto } from './goal.dto';
+import { User } from '../users/user.model';
 
 const defaultValidationOptions = {
-  transform: true,
   forbidNonWhitelisted: true,
+  transform: true,
   whitelist: true,
 };
 
@@ -28,52 +29,49 @@ export class GoalsController {
   constructor(
     @InjectModel(Goal)
     private goalModel: typeof Goal,
+
+    @InjectModel(User)
+    private userModel: typeof User,
   ) {}
 
   @Get()
-  async findAll(@Req() req: Request) {
-    const user = req.simpleBudgetUser;
-    return this.goalModel.findAll({ where: { userId: user.id } });
+  async findAll(@Req() { userId }: Request): Promise<Goal[]> {
+    return this.goalModel.findAll({ where: { userId } });
   }
 
   @Get(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async get(@Req() req: Request, @Param('id') id: string) {
-    const user = req.simpleBudgetUser;
-    const goal = await this.goalModel.findOne({
-      where: { userId: user.id, id: id },
+  async get(@Req() { userId }: Request, @Param('id') id: string) {
+    return this.goalModel.findOne({
+      where: { userId, id },
+      rejectOnEmpty: true,
     });
-
-    if (!goal) {
-      throw 'missing goal';
-    }
-
-    return goal;
   }
 
   @Post()
   @UsePipes(new ValidationPipe(defaultValidationOptions))
-  async create(@Req() req: Request, @Body() goalDto: GoalDto) {
-    const user = req.simpleBudgetUser;
+  async create(@Req() { userId }: Request, @Body() goalDto: GoalDto) {
+    const user = await this.userModel.findOne({
+      where: { id: userId },
+      rejectOnEmpty: true,
+    });
+
     return await user.$create<Goal>('goal', goalDto.serialize());
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe(defaultValidationOptions))
   async update(
-    @Req() req: Request,
+    @Req() { userId }: Request,
     @Body() goalDto: GoalDto,
     @Param('id') id: string,
   ) {
-    const user = req.simpleBudgetUser;
     const goal = await this.goalModel.findOne({
-      where: { userId: user.id, id: id },
+      where: { userId, id },
+      rejectOnEmpty: true,
     });
 
-    if (!goal) {
-      throw 'missing goal';
-    }
-
-    return await goal.update(goalDto.serialize());
+    goal.setAttributes(goalDto.serialize());
+    return goal.save();
   }
 }

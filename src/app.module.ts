@@ -11,7 +11,10 @@ import { SessionsModule } from './sessions/sessions.module';
   imports: [
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
+      host: process.env.DATABASE_HOST,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: 'simple_budget',
       autoLoadModels: true,
       synchronize: true,
       logQueryParameters: true,
