@@ -27,13 +27,4 @@ export class GoalDto {
   @IsDate()
   @Transform(({ value }) => new Date(value as string))
   public declare targetDate: Date;
-
-  public serialize() {
-    return {
-      name: this.name,
-      amount: this.amount,
-      recurrence: this.recurrence,
-      targetDate: this.targetDate,
-    };
-  }
 }

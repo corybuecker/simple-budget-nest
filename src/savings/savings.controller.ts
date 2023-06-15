@@ -56,7 +56,7 @@ export class SavingsController {
       rejectOnEmpty: true,
     });
 
-    return user.$create<Saving>('saving', savingDto.serialize());
+    return user.$create<Saving>('saving', savingDto);
   }
 
   @Put(':id')
@@ -71,7 +71,7 @@ export class SavingsController {
       rejectOnEmpty: true,
     });
 
-    saving.setAttributes(savingDto.serialize());
+    saving.setAttributes(savingDto);
     return saving.save();
   }
 }

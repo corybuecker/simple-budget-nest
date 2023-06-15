@@ -69,3 +69,4 @@ src/**/*.js
 src/**/*.d.ts
 src/tsconfig.tsbuildinfo
 tsconfig.tsbuildinfo
+logfile

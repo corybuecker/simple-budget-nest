@@ -9,6 +9,7 @@ import {
   FormValidator,
 } from '../services/form_validations';
 import { plainToInstance } from 'class-transformer';
+import { primaryButton } from '../styles/buttons';
 
 export const formValidator: FormValidator = (
   formData: FormData,
@@ -104,7 +105,11 @@ export const EditAccount = () => {
           <span className={'bg-amber-200'}>{formErrors.debt}</span>
         )}
       </div>
-      <button disabled={Object.values(formErrors).length > 0} type="submit">
+      <button
+        className={primaryButton}
+        disabled={Object.values(formErrors).length > 0}
+        type="submit"
+      >
         Save
       </button>
     </Form>

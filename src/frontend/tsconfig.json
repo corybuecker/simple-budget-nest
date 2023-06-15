@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "exactOptionalPropertyTypes": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2022"
+  }
+}
