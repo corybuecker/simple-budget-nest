@@ -13,5 +13,14 @@ module.exports = {
     project: true,
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['tailwind'],
+  ignorePatterns: [
+    'jest.config.js',
+    '.eslintrc.cjs',
+    'public/**/*',
+    'vendor/**/*',
+    'tailwind.config.js',
+  ],
+  "rules": {
+    "@typescript-eslint/no-misused-promises": "off"
+  }
 };

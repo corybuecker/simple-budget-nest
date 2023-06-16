@@ -1,3 +1,4 @@
+import Decimal from 'decimal.js';
 import {
   BelongsTo,
   Column,
@@ -11,7 +12,6 @@ import {
   Table,
   UpdatedAt,
 } from 'sequelize-typescript';
-import Decimal from 'decimal.js';
 import { User } from '../users/user.model';
 
 enum GoalRecurrence {

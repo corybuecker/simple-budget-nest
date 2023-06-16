@@ -1,14 +1,14 @@
+import { plainToInstance } from 'class-transformer';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import * as React from 'react';
 import { useState } from 'react';
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, useLoaderData, useSubmit } from 'react-router-dom';
 import { AccountFormObject } from '../form_objects/accounts';
 import {
   buildFormValidator,
   FormError,
   FormValidator,
 } from '../services/form_validations';
-import { plainToInstance } from 'class-transformer';
 import { primaryButton } from '../styles/buttons';
 
 export const formValidator: FormValidator = (
@@ -31,15 +31,17 @@ export const EditAccount = () => {
     {},
   );
 
-  const validate = buildFormValidator<AccountFormObject>(
+  const { onSubmit, onChange } = buildFormValidator<AccountFormObject>(
     formValidator,
     setFormErrors,
+    useSubmit(),
   );
 
   return (
     <Form
       method="put"
-      onChange={validate}
+      onChange={onChange}
+      onSubmit={onSubmit}
       className={'flex flex-col gap-4 max-w-2xl'}
     >
       <div className={'flex flex-col'}>
@@ -120,29 +122,41 @@ export const NewAccount = () => {
     {},
   );
 
-  const validate = buildFormValidator<AccountFormObject>(
+  const { onChange, onSubmit } = buildFormValidator<AccountFormObject>(
     formValidator,
     setFormErrors,
+    useSubmit(),
   );
 
   return (
-    <Form method="post" onChange={validate}>
-      {JSON.stringify(formErrors)}
-      <label htmlFor={'name'}>Name</label>
-      <input name="name" />
-      {formErrors.name && (
-        <span className={'bg-amber-200'}>{formErrors.name}</span>
-      )}
-      <label htmlFor={'amount'}>Amount</label>
-      <input type="number" name="amount" />
-      {formErrors.amount && (
-        <span className={'bg-amber-200'}>{formErrors.amount}</span>
-      )}
-      <label htmlFor={'debt'}>Debt</label>
-      <input type={'checkbox'} name="debt" />
-      <button disabled={Object.values(formErrors).length > 0} type="submit">
-        Save
-      </button>
+    <Form method="post" onSubmit={onSubmit} onChange={onChange}>
+      <div className={'flex flex-col gap-4 max-w-md'}>
+        <fieldset className={'flex flex-col'}>
+          <label htmlFor={'name'}>Name</label>
+          <input className={'form-input'} name="name" />
+          {formErrors.name && (
+            <span className={'bg-amber-200'}>{formErrors.name}</span>
+          )}
+        </fieldset>
+        <fieldset className={'flex flex-col'}>
+          <label htmlFor={'amount'}>Amount</label>
+          <input className={'form-input'} type="number" name="amount" />
+          {formErrors.amount && (
+            <span className={'bg-amber-200'}>{formErrors.amount}</span>
+          )}
+        </fieldset>
+        <fieldset className={'flex'}>
+          <label htmlFor={'debt'}>Debt</label>
+          <input className={'form-checkbox'} type={'checkbox'} name="debt" />
+        </fieldset>
+        <button
+          className={primaryButton}
+          disabled={Object.values(formErrors).length > 0}
+          type="submit"
+        >
+          Save
+        </button>
+      </div>
     </Form>
   );
 };

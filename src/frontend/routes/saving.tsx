@@ -1,15 +1,15 @@
+import { plainToInstance } from 'class-transformer';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import * as React from 'react';
 import { useState } from 'react';
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, useLoaderData, useSubmit } from 'react-router-dom';
+import { SavingFormObject } from '../form_objects/savings';
 
 import {
   buildFormValidator,
   FormError,
   FormValidator,
 } from '../services/form_validations';
-import { plainToInstance } from 'class-transformer';
-import { SavingFormObject } from '../form_objects/savings';
 
 export const formValidator: FormValidator = async (
   formData: FormData,
@@ -29,15 +29,17 @@ export const EditSaving = () => {
 
   const [formErrors, setFormErrors] = useState<FormError<SavingFormObject>>({});
 
-  const validate = buildFormValidator<SavingFormObject>(
+  const { onSubmit, onChange } = buildFormValidator<SavingFormObject>(
     formValidator,
     setFormErrors,
+    useSubmit(),
   );
 
   return (
     <Form
       method="put"
-      onChange={validate}
+      onChange={onChange}
+      onSubmit={onSubmit}
       className={'flex flex-col gap-4 max-w-2xl'}
     >
       <div className={'flex flex-col'}>
@@ -88,13 +90,14 @@ export const EditSaving = () => {
 export const NewSaving = () => {
   const [formErrors, setFormErrors] = useState<FormError<SavingFormObject>>({});
 
-  const validate = buildFormValidator<SavingFormObject>(
+  const { onChange, onSubmit } = buildFormValidator<SavingFormObject>(
     formValidator,
     setFormErrors,
+    useSubmit(),
   );
 
   return (
-    <Form method="post" onChange={validate}>
+    <Form method="post" onChange={onChange} onSubmit={onSubmit}>
       <div>{JSON.stringify(formErrors)}</div>
       <label htmlFor={'name'}>Name</label>
       <input name="name" />

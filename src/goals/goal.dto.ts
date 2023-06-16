@@ -1,6 +1,6 @@
-import { IsDate, IsEnum, IsNumber, IsPositive, Length } from 'class-validator';
-import { Transform } from 'class-transformer';
 import { Injectable } from '@nestjs/common';
+import { Transform } from 'class-transformer';
+import { IsDate, IsEnum, IsNumber, IsPositive, Length } from 'class-validator';
 
 export enum GoalRecurrence {
   NEVER = 'never',

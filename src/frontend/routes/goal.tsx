@@ -1,15 +1,15 @@
+import { plainToInstance } from 'class-transformer';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import * as React from 'react';
 import { useState } from 'react';
-import { Form, useLoaderData } from 'react-router-dom';
+import { Form, useLoaderData, useSubmit } from 'react-router-dom';
+import { GoalFormObject, GoalRecurrence } from '../form_objects/goals';
 
 import {
   buildFormValidator,
   FormError,
   FormValidator,
 } from '../services/form_validations';
-import { plainToInstance } from 'class-transformer';
-import { GoalFormObject, GoalRecurrence } from '../form_objects/goals';
 
 export const formValidator: FormValidator = async (
   formData: FormData,
@@ -29,9 +29,10 @@ export const EditGoal = () => {
 
   const [formErrors, setFormErrors] = useState<FormError<GoalFormObject>>({});
 
-  const validate = buildFormValidator<GoalFormObject>(
+  const { onSubmit, onChange } = buildFormValidator<GoalFormObject>(
     formValidator,
     setFormErrors,
+    useSubmit(),
   );
 
   const targetDate = formValues.targetDate;
@@ -49,7 +50,8 @@ export const EditGoal = () => {
   return (
     <Form
       method="put"
-      onChange={validate}
+      onChange={onChange}
+      onSubmit={onSubmit}
       className={'flex flex-col gap-4 max-w-2xl'}
     >
       <div className={'flex flex-col'}>
@@ -144,13 +146,14 @@ export const EditGoal = () => {
 export const NewGoal = () => {
   const [formErrors, setFormErrors] = useState<FormError<GoalFormObject>>({});
 
-  const validate = buildFormValidator<GoalFormObject>(
+  const { onSubmit, onChange } = buildFormValidator<GoalFormObject>(
     formValidator,
     setFormErrors,
+    useSubmit(),
   );
 
   return (
-    <Form method="post" onChange={validate}>
+    <Form method="post" onSubmit={onSubmit} onChange={onChange}>
       <div>{JSON.stringify(formErrors)}</div>
       <label htmlFor={'name'}>Name</label>
       <input name="name" />
