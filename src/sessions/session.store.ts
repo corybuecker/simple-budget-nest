@@ -1,8 +1,9 @@
 import { SessionData, Store } from 'express-session';
-import { Session } from './session.model';
 import { Op } from 'sequelize';
+import { Session } from './session.model';
 
-const SESSION_LIFETIME = 10 * 1000 * 60;
+// 10 minutes
+const SESSION_LIFETIME = 1000 * 60 * 10;
 
 export default class SessionStore extends Store {
   constructor() {

@@ -21,7 +21,7 @@ const Nav = (): React.JSX.Element => {
   ].join(' ');
 
   return (
-    <nav className="bg-slate-800">
+    <nav id={'primaryNav'} className="bg-slate-800">
       <div className="flex justify-between">
         <div className="flex h-14 items-center space-x-4 px-4">
           <NavLink

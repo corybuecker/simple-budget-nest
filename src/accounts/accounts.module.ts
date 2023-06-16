@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AccountsController } from './accounts.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { SessionsModule } from '../sessions/sessions.module';
 import { User } from '../users/user.model';
-import { Account } from './account.model';
 import { AccountDto } from './account.dto';
+import { Account } from './account.model';
+import { AccountsController } from './accounts.controller';
 
 @Module({
   controllers: [AccountsController],
   providers: [AccountDto],
-  imports: [SequelizeModule.forFeature([User, Account])],
+  imports: [SessionsModule, SequelizeModule.forFeature([User, Account])],
 })
 export class AccountsModule {}

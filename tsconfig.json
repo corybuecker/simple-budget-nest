@@ -7,6 +7,7 @@
     "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
     "incremental": true,
     "module": "CommonJS",
     "skipLibCheck": true,
@@ -15,13 +16,5 @@
   },
   "include": [
     "./src"
-  ],
-  "exclude": [
-    "./src/frontend"
-  ],
-  "references": [
-    {
-      "path": "./src/frontend"
-    }
   ]
 }

@@ -10,12 +10,12 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Request } from 'express';
-import { Account } from './account.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { AccountDto } from './account.dto';
+import { Request } from 'express';
 import { SessionGuard } from '../auth/session.guard';
 import { User } from '../users/user.model';
+import { AccountDto } from './account.dto';
+import { Account } from './account.model';
 
 const defaultValidationOptions = {
   forbidNonWhitelisted: true,

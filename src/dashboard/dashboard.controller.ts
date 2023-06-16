@@ -1,22 +1,5 @@
-import { Controller, Get, Render } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import * as React from 'react';
 
 @Controller()
-export class DashboardController {
-  @Get('accounts*')
-  @Render('index')
-  public accounts() {
-    return {};
-  }
-
-  @Get('savings*')
-  @Render('index')
-  public savings() {
-    return {};
-  }
-
-  @Get('goals*')
-  @Render('index')
-  public goals() {
-    return {};
-  }
-}
+export class DashboardController {}

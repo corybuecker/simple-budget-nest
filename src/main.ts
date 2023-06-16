@@ -1,12 +1,11 @@
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import session from 'express-session';
+import morgan from 'morgan';
+import { Profile } from 'passport-openidconnect';
 import { AppModule } from './app.module';
 import { AppLogger } from './logger/logger.service';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import morgan from 'morgan';
-import session from 'express-session';
 import SessionStore from './sessions/session.store';
-import { Profile } from 'passport-openidconnect';
-import helmet from 'helmet';
 
 declare module 'express-session' {
   interface SessionData {
@@ -51,15 +50,15 @@ async function bootstrap() {
       store: new SessionStore(),
     }),
   );
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          'script-src': ["'self'", "'nonce-9k27shj183Hs1'", 'ga.jspm.io'],
-        },
-      },
-    }),
-  );
+  // app.use(
+  //   helmet({
+  //     contentSecurityPolicy: {
+  //       directives: {
+  //         'script-src': ["'self'", "'nonce-9k27shj183Hs1'", 'ga.jspm.io'],
+  //       },
+  //     },
+  //   }),
+  // );
 
   await app.listen(3000);
 }
