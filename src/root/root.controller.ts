@@ -20,24 +20,24 @@ export class RootController {
   @Get('/')
   @Render('index')
   public async root(@Req() request: Request) {
-    return { initialContent: await this.rootService.pageContent(request) };
+    return { ssrContent: await this.rootService.pageContent(request) };
   }
 
   @Get('/accounts*')
   @Render('index')
   public async accounts(@Req() request: Request) {
-    return { initialContent: await this.rootService.pageContent(request) };
+    return { ssrContent: await this.rootService.pageContent(request) };
   }
 
   @Get('/savings*')
   @Render('index')
   public async savings(@Req() request: Request) {
-    return { initialContent: await this.rootService.pageContent(request) };
+    return { ssrContent: await this.rootService.pageContent(request) };
   }
 
   @Get('/goals*')
   @Render('index')
   public async goals(@Req() request: Request) {
-    return { initialContent: await this.rootService.pageContent(request) };
+    return { ssrContent: await this.rootService.pageContent(request) };
   }
 }

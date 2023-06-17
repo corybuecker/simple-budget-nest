@@ -1,6 +1,6 @@
 import { ActionFunctionArgs } from 'react-router-dom';
-import { AccountFormObject } from '../form_objects/accounts';
 import { plainToInstance } from 'class-transformer';
+import { AccountFormObject } from '../form_objects/accounts';
 
 const create = async ({ request }: ActionFunctionArgs) => {
   const data = plainToInstance(

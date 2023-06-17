@@ -1,25 +1,36 @@
 import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 import { GoalFormObject } from '../form_objects/goals';
+import { ServerLoaderParams } from './accounts';
 
-export const goal = async ({ params: { goalId } }: LoaderFunctionArgs) => {
-  if (!goalId) return;
+export const goalLoader = (serverParams?: ServerLoaderParams) => {
+  return async ({ params: { goalId } }: LoaderFunctionArgs) => {
+    if (!goalId) return;
 
-  const response = await fetch(`http://localhost:3000/api/goals/${goalId}`);
+    const response = await fetch(
+      `${serverParams?.host ?? ''}/api/goals/${goalId}`,
+      serverParams?.headers ? { headers: serverParams.headers } : {},
+    );
 
-  return plainToInstance(GoalFormObject, await response.json());
+    return plainToInstance(GoalFormObject, await response.json());
+  };
 };
 
-export const goals = async () => {
-  const response = await fetch('http://localhost:3000/api/goals');
+export const goalsLoader = (serverParams?: ServerLoaderParams) => {
+  return async () => {
+    const response = await fetch(
+      `${serverParams?.host ?? ''}/api/goals`,
+      serverParams?.headers ? { headers: serverParams.headers } : {},
+    );
 
-  if (response.status === 403) {
-    return redirect('/authentication');
-  }
+    if (response.status === 403) {
+      return redirect('/authentication');
+    }
 
-  if (!response.ok) {
-    throw response;
-  }
+    if (!response.ok) {
+      throw response;
+    }
 
-  return plainToInstance(GoalFormObject, await response.json());
+    return plainToInstance(GoalFormObject, await response.json());
+  };
 };

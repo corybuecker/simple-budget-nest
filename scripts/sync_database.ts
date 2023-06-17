@@ -15,6 +15,13 @@ const connectionOptions: SequelizeOptions = {
 const syncModels = async () => {
   const connection = new Sequelize(connectionOptions);
   await connection.sync({ alter: true });
+  const existingUser = await User.findOne({
+    where: { email: process.env.SEED_USER },
+  });
+  if (!existingUser) {
+    const user = new User({ email: process.env.SEED_USER });
+    await user.save();
+  }
   await connection.close();
 };
 

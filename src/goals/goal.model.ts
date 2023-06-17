@@ -9,8 +9,8 @@ import {
   Index,
   Model,
   PrimaryKey,
-  Table,
   UpdatedAt,
+  Table,
 } from 'sequelize-typescript';
 import { User } from '../users/user.model';
 
@@ -37,7 +37,7 @@ export class Goal extends Model {
     type: DataType.DECIMAL,
     allowNull: false,
     get() {
-      return new Decimal(this.getDataValue('amount'));
+      return new Decimal(this.getDataValue('amount') as string);
     },
   })
   declare amount: Decimal;

@@ -2,35 +2,41 @@ import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 import { AccountFormObject } from '../form_objects/accounts';
 
-export const account = async (
-  { params: { accountId } }: LoaderFunctionArgs,
-  headers?: Headers,
-) => {
-  if (!accountId) {
-    throw Error('missing account id');
-  }
-
-  const response = await fetch(
-    `http://localhost:3000/api/accounts/${accountId}`,
-    headers ? { headers } : {},
-  );
-
-  if (response.status === 403) {
-    return redirect('/authentication');
-  }
-
-  return plainToInstance(AccountFormObject, await response.json());
+export type ServerLoaderParams = {
+  headers: Headers;
+  host: string;
 };
 
-export const accounts = async (headers?: Headers) => {
-  const response = await fetch(
-    'http://localhost:3000/api/accounts',
-    headers ? { headers } : {},
-  );
+export const accountLoader = (serverParams?: ServerLoaderParams) => {
+  return async ({ params: { accountId } }: LoaderFunctionArgs) => {
+    if (!accountId) {
+      throw Error('missing account id');
+    }
 
-  if (response.status === 403) {
-    return redirect('/authentication');
-  }
+    const response = await fetch(
+      `${serverParams?.host ?? ''}/api/accounts/${accountId}`,
+      serverParams?.headers ? { headers: serverParams.headers } : {},
+    );
 
-  return plainToInstance(AccountFormObject, await response.json());
+    if (response.status === 403) {
+      return redirect('/authentication');
+    }
+
+    return plainToInstance(AccountFormObject, await response.json());
+  };
+};
+
+export const accountsLoader = (serverParams?: ServerLoaderParams) => {
+  return async () => {
+    const response = await fetch(
+      `${serverParams?.host ?? ''}/api/accounts`,
+      serverParams?.headers ? { headers: serverParams.headers } : {},
+    );
+
+    if (response.status === 403) {
+      return redirect('/authentication');
+    }
+
+    return plainToInstance(AccountFormObject, await response.json());
+  };
 };

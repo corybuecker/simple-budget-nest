@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
-import Nav from '../nav';
-import { goal as goalLoader, goals as goalsLoader } from '../loaders/goals';
-import { EditGoal, NewGoal } from './goal';
 import { createGoalAction, updateGoalAction } from '../actions/goals';
 import { GoalFormObject } from '../form_objects/goals';
+import { ServerLoaderParams } from '../loaders/accounts';
+import { goalLoader, goalsLoader } from '../loaders/goals';
+import Nav from '../nav';
+import { EditGoal, NewGoal } from './goal';
 
 const Main = () => {
   return (
@@ -36,29 +37,33 @@ export const Goals = () => {
     </div>
   );
 };
-export const goalsRoutes = {
-  path: '/goals',
-  element: <Main />,
+export const generateGoalsRoutes = (
+  serverLoaderParams?: ServerLoaderParams,
+) => {
+  return {
+    path: '/goals',
+    element: <Main />,
 
-  children: [
-    {
-      index: true,
-      errorElement: <ErrorBoundary />,
-      element: <Goals />,
-      loader: goalsLoader,
-    },
-    {
-      path: 'new',
-      element: <NewGoal />,
-      errorElement: <ErrorBoundary />,
-      action: createGoalAction,
-    },
-    {
-      path: ':goalId',
-      element: <EditGoal />,
-      errorElement: <ErrorBoundary />,
-      loader: goalLoader,
-      action: updateGoalAction,
-    },
-  ],
+    children: [
+      {
+        index: true,
+        errorElement: <ErrorBoundary />,
+        element: <Goals />,
+        loader: goalsLoader(serverLoaderParams),
+      },
+      {
+        path: 'new',
+        element: <NewGoal />,
+        errorElement: <ErrorBoundary />,
+        action: createGoalAction,
+      },
+      {
+        path: ':goalId',
+        element: <EditGoal />,
+        errorElement: <ErrorBoundary />,
+        loader: goalLoader(serverLoaderParams),
+        action: updateGoalAction,
+      },
+    ],
+  };
 };

@@ -5,16 +5,17 @@ import { StrictMode } from 'react';
 import { renderToString } from 'react-dom/server';
 import { Outlet } from 'react-router-dom';
 import {
+  StaticRouterProvider,
   createStaticHandler,
   createStaticRouter,
-  StaticRouterProvider,
 } from 'react-router-dom/server';
 import ErrorPage from '../frontend/errors';
+import { ServerLoaderParams } from '../frontend/loaders/accounts';
 import Nav from '../frontend/nav';
 import { generateAccountRoutes } from '../frontend/routes/accounts';
 import Authentication from '../frontend/routes/authentication';
-import { goalsRoutes } from '../frontend/routes/goals';
-import { savingsRoutes } from '../frontend/routes/savings';
+import { generateGoalsRoutes } from '../frontend/routes/goals';
+import { generateSavingsRoutes } from '../frontend/routes/savings';
 import { AppLogger } from '../logger/logger.service';
 
 @Injectable()
@@ -32,6 +33,11 @@ export class RootService {
       );
     };
 
+    const serverLoaderParams: ServerLoaderParams = {
+      headers: this.expressToHeaders(request),
+      host: 'http://localhost:3000',
+    };
+
     const routes = [
       {
         path: '/',
@@ -39,9 +45,9 @@ export class RootService {
         errorElement: <ErrorPage />,
       },
       { path: '/authentication', element: <Authentication /> },
-      generateAccountRoutes(this.expressToHeaders(request)),
-      goalsRoutes,
-      savingsRoutes,
+      generateAccountRoutes(serverLoaderParams),
+      generateGoalsRoutes(serverLoaderParams),
+      generateSavingsRoutes(serverLoaderParams),
     ];
 
     const handler = createStaticHandler(routes);

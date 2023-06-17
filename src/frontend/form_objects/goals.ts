@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsDate,
   IsEnum,
@@ -7,7 +8,6 @@ import {
   validate,
 } from 'class-validator';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
-import { Transform } from 'class-transformer';
 
 export enum GoalRecurrence {
   NEVER = 'never',
