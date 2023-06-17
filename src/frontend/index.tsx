@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import ErrorPage from './errors';
 import Nav from './nav';
-import { accountsRoutes } from './routes/accounts';
+import { generateAccountRoutes } from './routes/accounts';
 import Authentication from './routes/authentication';
 import { goalsRoutes } from './routes/goals';
 import { savingsRoutes } from './routes/savings';
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   { path: '/authentication', element: <Authentication /> },
-  accountsRoutes,
+  generateAccountRoutes(),
   goalsRoutes,
   savingsRoutes,
 ]);
@@ -36,7 +36,8 @@ const mainElements = document.getElementsByTagName('main');
 const mainElement = mainElements.item(0);
 
 if (mainElement) {
-  createRoot(mainElement).render(
+  hydrateRoot(
+    mainElement,
     <StrictMode>
       <RouterProvider router={router} />
     </StrictMode>,

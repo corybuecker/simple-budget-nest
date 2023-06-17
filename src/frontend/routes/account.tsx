@@ -42,7 +42,7 @@ export const EditAccount = () => {
       method="put"
       onChange={onChange}
       onSubmit={onSubmit}
-      className={'flex flex-col gap-4 max-w-2xl'}
+      className={'flex flex-col gap-4 max-w-md'}
     >
       <div className={'flex flex-col'}>
         <label htmlFor={'name'} className={'font-bold'}>
@@ -87,8 +87,7 @@ export const EditAccount = () => {
           <span className={'bg-amber-200'}>{formErrors.amount}</span>
         )}
       </div>
-      <div className={'flex flex-col'}>
-        <label htmlFor={'debt'}>Debt</label>
+      <div className={'flex gap-3'}>
         <input
           type={'checkbox'}
           name={'debt'}
@@ -103,6 +102,7 @@ export const EditAccount = () => {
           }}
           className={'w-4'}
         />
+        <label htmlFor={'debt'}>Debt</label>
         {formErrors.debt && (
           <span className={'bg-amber-200'}>{formErrors.debt}</span>
         )}
@@ -129,7 +129,12 @@ export const NewAccount = () => {
   );
 
   return (
-    <Form method="post" onSubmit={onSubmit} onChange={onChange}>
+    <Form
+      method="post"
+      onSubmit={onSubmit}
+      onChange={onChange}
+      className={'flex flex-col gap-4 max-w-2xl'}
+    >
       <div className={'flex flex-col gap-4 max-w-md'}>
         <fieldset className={'flex flex-col'}>
           <label htmlFor={'name'}>Name</label>
@@ -145,9 +150,14 @@ export const NewAccount = () => {
             <span className={'bg-amber-200'}>{formErrors.amount}</span>
           )}
         </fieldset>
-        <fieldset className={'flex'}>
+        <fieldset className={'flex gap-3 items-center'}>
+          <input
+            className={'form-checkbox'}
+            type={'checkbox'}
+            id={'debt'}
+            name={'debt'}
+          />
           <label htmlFor={'debt'}>Debt</label>
-          <input className={'form-checkbox'} type={'checkbox'} name="debt" />
         </fieldset>
         <button
           className={primaryButton}

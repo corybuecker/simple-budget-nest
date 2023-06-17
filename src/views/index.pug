@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 html
     head
+        link(href='/app.css' rel='stylesheet')
+    body
+        main !{initialContent}
         // https://generator.jspm.io/#VcjLDcIwDADQHGAOJrCbIJA4dhU3MSgon8p2qy7QvRGiF47v7SfnzhfNdS4M05JebMDbLKzqYiFVMKGmzy6VZfR4x3D8SiUnsv7dcEPvhCkapF7H8MAr+iGWzM1+f9wfhrduIEuzXPkD9goJl4gA
         script(type="importmap" nonce="9k27shj183Hs1").
             {
@@ -84,8 +87,4 @@ html
                 }
               }
             }
-        script(type='module' src='/frontend.js')
-        link(rel='stylesheet' href='https://rsms.me/inter/inter.css')
-        link(href='/app.css' rel='stylesheet')
-    body
-        main
+        script(type='module' async src='/frontend.js')

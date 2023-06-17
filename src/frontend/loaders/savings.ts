@@ -1,11 +1,11 @@
+import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 import { SavingFormObject } from '../form_objects/savings';
-import { plainToInstance } from 'class-transformer';
 
 export const saving = async ({ params: { savingId } }: LoaderFunctionArgs) => {
   if (!savingId) return;
 
-  const response = await fetch(`/api/savings/${savingId}`);
+  const response = await fetch(`http://localhost:3000/api/savings/${savingId}`);
 
   if (!response.ok) {
     throw response;
@@ -15,7 +15,7 @@ export const saving = async ({ params: { savingId } }: LoaderFunctionArgs) => {
 };
 
 export const savings = async () => {
-  const response = await fetch('/api/savings');
+  const response = await fetch('http://localhost:3000/api/savings');
 
   if (response.status === 403) {
     return redirect('/authentication');

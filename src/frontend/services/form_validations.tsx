@@ -48,6 +48,7 @@ export function buildFormValidator<T>(
           ),
         };
       }, {});
+
       setFormErrors(mappedErrors);
     }
   };

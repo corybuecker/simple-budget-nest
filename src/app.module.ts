@@ -6,6 +6,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { GoalsModule } from './goals/goals.module';
 import { SavingsModule } from './savings/savings.module';
 import { SessionsModule } from './sessions/sessions.module';
+import { RootModule } from './root/root.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SessionsModule } from './sessions/sessions.module';
       synchronize: true,
       sync: { alter: true },
     }),
+    RootModule,
   ],
 })
 export class AppModule {}
