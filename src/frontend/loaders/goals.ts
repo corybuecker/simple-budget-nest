@@ -1,7 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
+import { ServerLoaderParams } from '../../shared/types';
 import { GoalFormObject } from '../form_objects/goals';
-import { ServerLoaderParams } from './accounts';
 
 export const goalLoader = (serverParams?: ServerLoaderParams) => {
   return async ({ params: { goalId } }: LoaderFunctionArgs) => {

@@ -3,53 +3,25 @@ import { Request as ExpressRequest } from 'express';
 import * as React from 'react';
 import { StrictMode } from 'react';
 import { renderToString } from 'react-dom/server';
-import { Outlet } from 'react-router-dom';
 import {
-  StaticRouterProvider,
   createStaticHandler,
   createStaticRouter,
+  StaticRouterProvider,
 } from 'react-router-dom/server';
-import ErrorPage from '../frontend/errors';
-import { ServerLoaderParams } from '../frontend/loaders/accounts';
-import Nav from '../frontend/nav';
-import { generateAccountRoutes } from '../frontend/routes/accounts';
-import Authentication from '../frontend/routes/authentication';
-import { generateGoalsRoutes } from '../frontend/routes/goals';
-import { generateSavingsRoutes } from '../frontend/routes/savings';
 import { AppLogger } from '../logger/logger.service';
+import { generateRoutes } from '../shared/route_generator';
+import { ServerLoaderParams } from '../shared/types';
 
 @Injectable()
 export class RootService {
   constructor(private logger: AppLogger) {}
   public async pageContent(request: ExpressRequest) {
-    const Main = () => {
-      return (
-        <>
-          <Nav></Nav>
-          <div className={'p-2'}>
-            <Outlet />
-          </div>
-        </>
-      );
-    };
-
     const serverLoaderParams: ServerLoaderParams = {
       headers: this.expressToHeaders(request),
       host: 'https://localhost:3000',
     };
 
-    const routes = [
-      {
-        path: '/',
-        element: <Main />,
-        errorElement: <ErrorPage />,
-      },
-      { path: '/authentication', element: <Authentication /> },
-      generateAccountRoutes(serverLoaderParams),
-      generateGoalsRoutes(serverLoaderParams),
-      generateSavingsRoutes(serverLoaderParams),
-    ];
-
+    const routes = generateRoutes(serverLoaderParams);
     const handler = createStaticHandler(routes);
     const fetchRequest = this.createFetchRequest(request);
     const context = await handler.query(fetchRequest);

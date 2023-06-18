@@ -16,6 +16,7 @@ import { RootModule } from './root/root.module';
     GoalsModule,
     SavingsModule,
     SessionsModule,
+    RootModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.DATABASE_HOST || '',
@@ -23,10 +24,8 @@ import { RootModule } from './root/root.module';
       password: process.env.DATABASE_PASSWORD || '',
       database: 'simple_budget',
       autoLoadModels: true,
-      synchronize: true,
-      sync: { alter: true },
+      synchronize: false,
     }),
-    RootModule,
   ],
 })
 export class AppModule {}

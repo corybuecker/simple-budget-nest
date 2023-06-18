@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import Element = React.JSX.Element;
 
-const Nav = (): React.JSX.Element => {
+const Nav = (): Element => {
   const inactiveClass = [
     'text-white',
     'hover:bg-slate-600',
@@ -21,11 +22,11 @@ const Nav = (): React.JSX.Element => {
   ].join(' ');
 
   return (
-    <nav id={'primaryNav'} className="bg-slate-800">
+    <nav className="bg-slate-800">
       <div className="flex justify-between">
         <div className="flex h-14 items-center space-x-4 px-4">
           <NavLink
-            to={'/'}
+            to={'/dashboard'}
             className={({ isActive }) =>
               isActive ? activeClass : inactiveClass
             }

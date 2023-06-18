@@ -11,7 +11,7 @@ export class AuthController {
   }
   @Get('callback')
   @UseGuards(AuthGuard('openidconnect'))
-  @Redirect('/accounts')
+  @Redirect('/dashboard')
   public callback(@Request() req: Express.Request) {
     req.session.profile = req.user as unknown as Profile;
   }

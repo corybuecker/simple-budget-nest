@@ -1,15 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Transform } from 'class-transformer';
 import { IsDate, IsEnum, IsNumber, IsPositive, Length } from 'class-validator';
-
-export enum GoalRecurrence {
-  NEVER = 'never',
-  DAILY = 'daily',
-  WEEKLY = 'weekly',
-  MONTHLY = 'monthly',
-  QUARTERLY = 'quarterly',
-  YEARLY = 'yearly',
-}
+import { GoalRecurrence } from './types';
 
 @Injectable()
 export class GoalDto {
