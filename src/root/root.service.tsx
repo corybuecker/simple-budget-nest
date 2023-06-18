@@ -35,7 +35,7 @@ export class RootService {
 
     const serverLoaderParams: ServerLoaderParams = {
       headers: this.expressToHeaders(request),
-      host: 'http://localhost:3000',
+      host: 'https://localhost:3000',
     };
 
     const routes = [
@@ -69,7 +69,7 @@ export class RootService {
   }
 
   private createFetchRequest(request: ExpressRequest) {
-    const origin = `http://locahost:3000`;
+    const origin = `https://locahost:3000`;
     const url = new URL(request.url, origin);
 
     const controller = new AbortController();

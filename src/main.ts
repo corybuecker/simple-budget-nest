@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import { NestApplicationOptions } from '@nestjs/common/interfaces/nest-application-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import session from 'express-session';
@@ -22,15 +24,38 @@ declare global {
   }
 }
 
+enum Environment {
+  Development = 'development',
+  Production = 'production',
+}
+
 async function bootstrap() {
   const cookieSecret = process.env.COOKIE_SECRET;
   if (!cookieSecret) {
     throw Error('must set cookie secret');
   }
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    bufferLogs: true,
-  });
+  const environment =
+    process.env.NODE_ENV === 'production'
+      ? Environment.Production
+      : Environment.Development;
+
+  let appOptions: NestApplicationOptions = { bufferLogs: true };
+
+  if (environment === Environment.Development) {
+    appOptions = {
+      ...appOptions,
+      httpsOptions: {
+        cert: fs.readFileSync('localhost.crt'),
+        key: fs.readFileSync('localhost.key'),
+      },
+    };
+  }
+
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule,
+    appOptions,
+  );
 
   app.useLogger(new AppLogger());
   app.use(morgan('combined'));
@@ -44,21 +69,12 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        // secure: true,
+        secure: true,
         sameSite: 'lax',
       },
       store: new SessionStore(),
     }),
   );
-  // app.use(
-  //   helmet({
-  //     contentSecurityPolicy: {
-  //       directives: {
-  //         'script-src': ["'self'", "'nonce-9k27shj183Hs1'", 'ga.jspm.io'],
-  //       },
-  //     },
-  //   }),
-  // );
 
   await app.listen(3000);
 }

@@ -70,3 +70,5 @@ src/**/*.d.ts
 src/tsconfig.tsbuildinfo
 tsconfig.tsbuildinfo
 logfile
+localhost.crt
+localhost.key
