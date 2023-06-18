@@ -10,7 +10,7 @@ const strategyOptions: StrategyOptions = {
   issuer: 'https://accounts.google.com',
   authorizationURL: 'https://accounts.google.com/o/oauth2/v2/auth',
   tokenURL: 'https://oauth2.googleapis.com/token',
-  callbackURL: 'http://localhost:3000/authentication/callback',
+  callbackURL: 'https://localhost:3000/authentication/callback',
   userInfoURL: 'https://openidconnect.googleapis.com/v1/userinfo',
   clientID: process.env.CLIENT_ID || '',
   clientSecret: process.env.CLIENT_SECRET || '',
