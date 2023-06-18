@@ -16,8 +16,6 @@ export class SessionGuard implements CanActivate {
     const request = httpContext.getRequest<Request>();
     const emails = request?.session?.profile?.emails;
 
-    console.log(request.headers);
-
     if (emails) {
       const user = await this.userModel.findOne({
         where: { email: emails[0].value },

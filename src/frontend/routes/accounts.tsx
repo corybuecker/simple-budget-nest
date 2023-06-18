@@ -1,18 +1,13 @@
 import * as React from 'react';
-import {
-  Link,
-  LoaderFunctionArgs,
-  Outlet,
-  useLoaderData,
-  useRouteError,
-} from 'react-router-dom';
-import { createAccountAction, updateAccountAction } from '../actions/accounts';
+import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
+import Nav from '../nav';
 import { AccountFormObject } from '../form_objects/accounts';
 import {
-  account as accountLoader,
-  accounts as accountsLoader,
+  accountLoader,
+  accountsLoader,
+  ServerLoaderParams,
 } from '../loaders/accounts';
-import Nav from '../nav';
+import { createAccountAction, updateAccountAction } from '../actions/accounts';
 import { EditAccount, NewAccount } from './account';
 
 const Main = () => {
@@ -40,14 +35,18 @@ export const Accounts = () => {
       <Link to={'new'}>New</Link>
       {accounts.map((account) => (
         <div key={account.id}>
-          <Link to={account.id}>Account {account.id}</Link>
+          <Link to={account.id}>
+            Account {account.id} &mdash; {account.amount}
+          </Link>
         </div>
       ))}
     </div>
   );
 };
 
-export const generateAccountRoutes = (indexHeaders?: Headers) => {
+export const generateAccountRoutes = (
+  serverLoaderParams?: ServerLoaderParams,
+) => {
   return {
     path: '/accounts',
     element: <Main />,
@@ -55,21 +54,21 @@ export const generateAccountRoutes = (indexHeaders?: Headers) => {
       {
         index: true,
         element: <Accounts />,
-        loader: () => accountsLoader(indexHeaders),
+        loader: accountsLoader(serverLoaderParams),
         errorElement: <ErrorBoundary />,
+      },
+      {
+        path: ':accountId',
+        element: <EditAccount />,
+        errorElement: <ErrorBoundary />,
+        loader: accountLoader(serverLoaderParams),
+        action: updateAccountAction,
       },
       {
         path: 'new',
         element: <NewAccount />,
         errorElement: <ErrorBoundary />,
         action: createAccountAction,
-      },
-      {
-        path: ':accountId',
-        element: <EditAccount />,
-        errorElement: <ErrorBoundary />,
-        loader: (args: LoaderFunctionArgs) => accountLoader(args, indexHeaders),
-        action: updateAccountAction,
       },
     ],
   };

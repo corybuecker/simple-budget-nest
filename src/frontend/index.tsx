@@ -6,8 +6,8 @@ import ErrorPage from './errors';
 import Nav from './nav';
 import { generateAccountRoutes } from './routes/accounts';
 import Authentication from './routes/authentication';
-import { goalsRoutes } from './routes/goals';
-import { savingsRoutes } from './routes/savings';
+import { generateGoalsRoutes } from './routes/goals';
+import { generateSavingsRoutes } from './routes/savings';
 
 const Main = () => {
   return (
@@ -28,8 +28,8 @@ const router = createBrowserRouter([
   },
   { path: '/authentication', element: <Authentication /> },
   generateAccountRoutes(),
-  goalsRoutes,
-  savingsRoutes,
+  generateGoalsRoutes(),
+  generateSavingsRoutes(),
 ]);
 
 const mainElements = document.getElementsByTagName('main');

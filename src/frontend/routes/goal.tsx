@@ -10,6 +10,7 @@ import {
   FormError,
   FormValidator,
 } from '../services/form_validations';
+import { primaryButton } from '../styles/buttons';
 
 export const formValidator: FormValidator = async (
   formData: FormData,
@@ -137,7 +138,11 @@ export const EditGoal = () => {
         </option>
         <option value={GoalRecurrence.YEARLY}>{GoalRecurrence.YEARLY}</option>
       </select>
-      <button disabled={Object.values(formErrors).length > 0} type="submit">
+      <button
+        className={primaryButton}
+        disabled={Object.values(formErrors).length > 0}
+        type="submit"
+      >
         Save
       </button>
     </Form>
@@ -153,20 +158,24 @@ export const NewGoal = () => {
   );
 
   return (
-    <Form method="post" onSubmit={onSubmit} onChange={onChange}>
-      <div>{JSON.stringify(formErrors)}</div>
+    <Form
+      method="post"
+      className={'flex flex-col gap-4 max-w-2xl'}
+      onSubmit={onSubmit}
+      onChange={onChange}
+    >
       <label htmlFor={'name'}>Name</label>
-      <input name="name" />
+      <input id={'name'} className={'form-input'} name={'name'} />
       {formErrors.name && (
         <span className={'bg-amber-200'}>{formErrors.name}</span>
       )}
       <label htmlFor={'amount'}>Amount</label>
-      <input type="number" name="amount" />
+      <input className={'form-input'} type="number" name="amount" />
       {formErrors.amount && (
         <span className={'bg-amber-200'}>{formErrors.amount}</span>
       )}
       <label htmlFor={'recurrence'}>Recurrence</label>
-      <select name="recurrence">
+      <select className={'form-select'} name="recurrence">
         <option value={GoalRecurrence.NEVER}>{GoalRecurrence.NEVER}</option>
         <option value={GoalRecurrence.DAILY}>{GoalRecurrence.DAILY}</option>
         <option value={GoalRecurrence.WEEKLY}>{GoalRecurrence.WEEKLY}</option>
@@ -180,11 +189,15 @@ export const NewGoal = () => {
         <span className={'bg-amber-200'}>{formErrors.recurrence}</span>
       )}
       <label htmlFor={'targetDate'}>Target date</label>
-      <input type="date" name="targetDate" />
+      <input className={'form-input'} type="date" name="targetDate" />
       {formErrors.targetDate && (
         <span className={'bg-amber-200'}>{formErrors.targetDate}</span>
       )}
-      <button disabled={Object.values(formErrors).length > 0} type="submit">
+      <button
+        className={primaryButton}
+        disabled={Object.values(formErrors).length > 0}
+        type="submit"
+      >
         Save
       </button>
     </Form>

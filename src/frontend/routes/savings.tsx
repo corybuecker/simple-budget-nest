@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
-import Nav from '../nav';
-import {
-  saving as savingLoader,
-  savings as savingsLoader,
-} from '../loaders/savings';
-import { EditSaving, NewSaving } from './saving';
 import { createSavingAction, updateSavingAction } from '../actions/savings';
 import { SavingFormObject } from '../form_objects/savings';
+import { ServerLoaderParams } from '../loaders/accounts';
+import { savingLoader, savingsLoader } from '../loaders/savings';
+import Nav from '../nav';
+import { EditSaving, NewSaving } from './saving';
 
 const Main = () => {
   return (
@@ -40,28 +38,32 @@ const ErrorBoundary = () => {
   return <pre>{errors}</pre>;
 };
 
-export const savingsRoutes = {
-  path: '/savings',
-  element: <Main />,
-  children: [
-    {
-      index: true,
-      errorElement: <ErrorBoundary />,
-      element: <Savings />,
-      loader: savingsLoader,
-    },
-    {
-      path: 'new',
-      element: <NewSaving />,
-      errorElement: <ErrorBoundary />,
-      action: createSavingAction,
-    },
-    {
-      path: ':savingId',
-      element: <EditSaving />,
-      errorElement: <ErrorBoundary />,
-      loader: savingLoader,
-      action: updateSavingAction,
-    },
-  ],
+export const generateSavingsRoutes = (
+  serverLoaderParams?: ServerLoaderParams,
+) => {
+  return {
+    path: '/savings',
+    element: <Main />,
+    children: [
+      {
+        index: true,
+        errorElement: <ErrorBoundary />,
+        element: <Savings />,
+        loader: savingsLoader(serverLoaderParams),
+      },
+      {
+        path: 'new',
+        element: <NewSaving />,
+        errorElement: <ErrorBoundary />,
+        action: createSavingAction,
+      },
+      {
+        path: ':savingId',
+        element: <EditSaving />,
+        errorElement: <ErrorBoundary />,
+        loader: savingLoader(serverLoaderParams),
+        action: updateSavingAction,
+      },
+    ],
+  };
 };

@@ -10,12 +10,12 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { SessionGuard } from '../auth/session.guard';
 import { InjectModel } from '@nestjs/sequelize';
 import { Request } from 'express';
+import { SessionGuard } from '../auth/session.guard';
+import { User } from '../users/user.model';
 import { Saving } from './saving.model';
 import { SavingDto } from './saving.dto';
-import { User } from '../users/user.model';
 
 const defaultValidationOptions = {
   transform: true,

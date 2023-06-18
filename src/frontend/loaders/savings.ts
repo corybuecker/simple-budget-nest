@@ -1,29 +1,40 @@
 import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
 import { SavingFormObject } from '../form_objects/savings';
+import { ServerLoaderParams } from './accounts';
 
-export const saving = async ({ params: { savingId } }: LoaderFunctionArgs) => {
-  if (!savingId) return;
+export const savingLoader = (serverParams?: ServerLoaderParams) => {
+  return async ({ params: { savingId } }: LoaderFunctionArgs) => {
+    if (!savingId) return;
 
-  const response = await fetch(`http://localhost:3000/api/savings/${savingId}`);
+    const response = await fetch(
+      `${serverParams?.host ?? ''}/api/savings/${savingId}`,
+      serverParams?.headers ? { headers: serverParams.headers } : {},
+    );
 
-  if (!response.ok) {
-    throw response;
-  }
+    if (!response.ok) {
+      throw response;
+    }
 
-  return plainToInstance(SavingFormObject, await response.json());
+    return plainToInstance(SavingFormObject, await response.json());
+  };
 };
 
-export const savings = async () => {
-  const response = await fetch('http://localhost:3000/api/savings');
+export const savingsLoader = (serverParams?: ServerLoaderParams) => {
+  return async () => {
+    const response = await fetch(
+      `${serverParams?.host ?? ''}/api/savings`,
+      serverParams?.headers ? { headers: serverParams.headers } : {},
+    );
 
-  if (response.status === 403) {
-    return redirect('/authentication');
-  }
+    if (response.status === 403) {
+      return redirect('/authentication');
+    }
 
-  if (!response.ok) {
-    throw response;
-  }
+    if (!response.ok) {
+      throw response;
+    }
 
-  return plainToInstance(SavingFormObject, await response.json());
+    return plainToInstance(SavingFormObject, await response.json());
+  };
 };
