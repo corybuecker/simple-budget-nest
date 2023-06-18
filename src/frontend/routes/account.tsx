@@ -73,6 +73,7 @@ export const EditAccount = () => {
           type={'number'}
           name={'amount'}
           id={'amount'}
+          step={'0.01'}
           value={formValues.amount}
           onChange={(e) => {
             setFormValues(
@@ -145,7 +146,13 @@ export const NewAccount = () => {
         </fieldset>
         <fieldset className={'flex flex-col'}>
           <label htmlFor={'amount'}>Amount</label>
-          <input className={'form-input'} type="number" name="amount" />
+          <input
+            className={'form-input'}
+            type={'number'}
+            name={'amount'}
+            id={'amount'}
+            step={'0.01'}
+          />
           {formErrors.amount && (
             <span className={'bg-amber-200'}>{formErrors.amount}</span>
           )}

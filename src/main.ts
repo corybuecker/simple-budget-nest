@@ -1,4 +1,13 @@
 import * as fs from 'fs';
+import { config } from 'dotenv';
+
+if (fs.existsSync('/secrets/application-cloud-run')) {
+  config({ path: '/secrets/application-cloud-run' });
+} else {
+  config({ path: './.env' });
+}
+
+// eslint-disable-next-line import/order
 import { NestApplicationOptions } from '@nestjs/common/interfaces/nest-application-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -56,6 +65,10 @@ async function bootstrap() {
     AppModule,
     appOptions,
   );
+
+  if (environment === Environment.Production) {
+    app.set('trust proxy', true);
+  }
 
   app.useLogger(new AppLogger());
   app.use(morgan('combined'));

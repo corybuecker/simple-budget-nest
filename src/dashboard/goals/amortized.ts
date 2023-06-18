@@ -11,6 +11,8 @@ export class Amortized {
   ) {}
 
   public amountToDate() {
+    this.logger.log(this.goal.name);
+    this.logger.log(this.savedTodate());
     return new Decimal(this.savedTodate());
   }
 
@@ -39,22 +41,29 @@ export class Amortized {
     return { start, end };
   }
 
-  private daystoSave() {
-    return differenceInDays(this.duration().end, this.duration().start);
+  private daysToSave() {
+    if (differenceInDays(this.duration().end, this.duration().start) === 0) {
+      return new Decimal(1);
+    }
+
+    return new Decimal(
+      differenceInDays(this.duration().end, this.duration().start),
+    );
   }
 
   private dailyAmountToSave() {
-    return Decimal.div(this.goal.amount, this.daystoSave());
+    return Decimal.div(this.goal.amount, this.daysToSave());
   }
 
   private savedTodate() {
-    return Decimal.mul(this.daystoSave(), this.elapsedDays());
+    return Decimal.mul(this.dailyAmountToSave(), this.elapsedDays());
   }
 
   private elapsedDays() {
-    return Decimal.min(
-      new Decimal(0),
-      new Decimal(differenceInDays(new Date(), this.duration().start)),
-    );
+    if (differenceInDays(new Date(), this.duration().start) < 0) {
+      return new Decimal(0);
+    }
+
+    return differenceInDays(new Date(), this.duration().start);
   }
 }
