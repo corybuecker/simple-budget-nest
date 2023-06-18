@@ -23,6 +23,11 @@ export class RootController {
     return { ssrContent: await this.rootService.pageContent(request) };
   }
 
+  @Get('/dashboard')
+  @Render('index')
+  public async dashboard(@Req() request: Request) {
+    return { ssrContent: await this.rootService.pageContent(request) };
+  }
   @Get('/accounts*')
   @Render('index')
   public async accounts(@Req() request: Request) {

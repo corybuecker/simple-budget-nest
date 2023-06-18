@@ -14,12 +14,12 @@ type Checkbox = {
 
 export class AccountFormObject {
   @Length(1, 255)
-  public name!: string;
+  public declare name: string;
 
   @IsNumber()
   @IsPositive()
   @Transform(({ value }) => Number(value as string))
-  public amount!: number;
+  public declare amount: number;
 
   @IsBoolean()
   @Transform(

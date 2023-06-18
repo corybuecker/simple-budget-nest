@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
+import { ServerLoaderParams } from '../../shared/types';
 import { createGoalAction, updateGoalAction } from '../actions/goals';
 import { GoalFormObject } from '../form_objects/goals';
-import { ServerLoaderParams } from '../loaders/accounts';
 import { goalLoader, goalsLoader } from '../loaders/goals';
 import Nav from '../nav';
 import { EditGoal, NewGoal } from './goal';

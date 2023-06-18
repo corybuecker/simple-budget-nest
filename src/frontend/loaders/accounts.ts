@@ -1,11 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
+import { ServerLoaderParams } from '../../shared/types';
 import { AccountFormObject } from '../form_objects/accounts';
-
-export type ServerLoaderParams = {
-  headers: Headers;
-  host: string;
-};
 
 export const accountLoader = (serverParams?: ServerLoaderParams) => {
   return async ({ params: { accountId } }: LoaderFunctionArgs) => {

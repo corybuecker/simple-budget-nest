@@ -49,7 +49,13 @@ export class Goal extends Model {
   })
   declare recurrence: GoalRecurrence;
 
-  @Column({ allowNull: true, type: DataType.DATE })
+  @Column({
+    allowNull: true,
+    type: DataType.DATEONLY,
+    get() {
+      return new Date(this.getDataValue('targetDate') as string);
+    },
+  })
   declare targetDate: Date;
 
   @BelongsTo(() => User, 'userId')
