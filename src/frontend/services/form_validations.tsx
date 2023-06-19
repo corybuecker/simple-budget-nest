@@ -1,5 +1,4 @@
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
-import * as React from 'react';
 import { Dispatch, FormEvent, JSX, SetStateAction } from 'react';
 import { SubmitFunction } from 'react-router-dom';
 

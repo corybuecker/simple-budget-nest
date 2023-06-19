@@ -1,4 +1,4 @@
-export enum GoalRecurrence {
+export enum Recurrence {
   NEVER = 'never',
   DAILY = 'daily',
   WEEKLY = 'weekly',

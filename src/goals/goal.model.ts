@@ -12,16 +12,8 @@ import {
   UpdatedAt,
   Table,
 } from 'sequelize-typescript';
+import { Recurrence } from '../types';
 import { User } from '../users/user.model';
-
-enum GoalRecurrence {
-  NEVER = 'never',
-  DAILY = 'daily',
-  WEEKLY = 'weekly',
-  MONTHLY = 'monthly',
-  QUARTERLY = 'quarterly',
-  YEARLY = 'yearly',
-}
 
 @Table({ paranoid: true })
 export class Goal extends Model {
@@ -44,10 +36,10 @@ export class Goal extends Model {
 
   @Column({
     allowNull: false,
-    type: DataType.ENUM(...Object.values(GoalRecurrence)),
-    defaultValue: GoalRecurrence.MONTHLY,
+    type: DataType.ENUM(...Object.values(Recurrence)),
+    defaultValue: Recurrence.MONTHLY,
   })
-  declare recurrence: GoalRecurrence;
+  declare recurrence: Recurrence;
 
   @Column({
     allowNull: true,

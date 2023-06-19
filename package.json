@@ -56,8 +56,7 @@
     "typescript": "5.1.3"
   },
   "scripts": {
-    "start": "npx ts-node src/main.ts",
-    "start:dev": "npx nodemon --ext ts,tsx",
+    "start": "nest start --tsc --watch --entryFile main",
     "build": "npm run tailwind:compile && npm run frontend:compile && npx tsc --build",
     "frontend:compile": "npx esbuild --format=esm --outdir=./public --bundle --sourcemap --splitting --external:react --external:react-dom --external:class-validator --external:class-transformer --target=es2017 --minify ./src/frontend",
     "tailwind:compile": "npx tailwindcss -i src/frontend/index.css -o ./public/app.css",

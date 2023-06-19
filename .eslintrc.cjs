@@ -21,7 +21,8 @@ module.exports = {
     ".eslintrc.cjs",
     "public/**/*",
     "scripts/**/*",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "dist/**/*"
   ],
   "rules": {
     "@typescript-eslint/no-misused-promises": "off",

@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { useRouteError } from 'react-router-dom';
+import { JSX } from 'react';
 
-const ErrorPage = (): React.JSX.Element => {
+const ErrorPage = (): JSX.Element => {
   const error = useRouteError() as Error;
 
   return (
