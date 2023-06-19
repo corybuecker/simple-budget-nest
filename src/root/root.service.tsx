@@ -16,9 +16,10 @@ import { ServerLoaderParams } from '../shared/types';
 export class RootService {
   constructor(private logger: AppLogger) {}
   public async pageContent(request: ExpressRequest) {
+    const host = process.env.HOST || 'https://localhost:3000';
     const serverLoaderParams: ServerLoaderParams = {
       headers: this.expressToHeaders(request),
-      host: 'https://localhost:3000',
+      host,
     };
 
     const routes = generateRoutes(serverLoaderParams);
@@ -41,8 +42,8 @@ export class RootService {
   }
 
   private createFetchRequest(request: ExpressRequest) {
-    const origin = `https://locahost:3000`;
-    const url = new URL(request.url, origin);
+    const host = process.env.HOST || 'https://localhost:3000';
+    const url = new URL(request.url, host);
 
     const controller = new AbortController();
     request.on('close', () => controller.abort());

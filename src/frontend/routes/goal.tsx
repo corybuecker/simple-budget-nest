@@ -25,7 +25,7 @@ export const formValidator: FormValidator = async (
 
 export const EditGoal = () => {
   const [formValues, setFormValues] = useState<GoalFormObject>(
-    useLoaderData() as GoalFormObject,
+    plainToInstance(GoalFormObject, useLoaderData()),
   );
 
   const [formErrors, setFormErrors] = useState<FormError<GoalFormObject>>({});
@@ -42,6 +42,7 @@ export const EditGoal = () => {
     month: '2-digit',
     day: '2-digit',
   });
+
   const dateParts = formatter.formatToParts(targetDate);
   const year = dateParts.find((p) => p.type === 'year')?.value;
   const month = dateParts.find((p) => p.type === 'month')?.value;
@@ -68,7 +69,7 @@ export const EditGoal = () => {
             )
           }
           value={formValues.name}
-          className={'border p-2'}
+          className={'form-input'}
         />
         {formErrors.name && (
           <span className={'bg-amber-200'}>{formErrors.name}</span>
@@ -82,6 +83,7 @@ export const EditGoal = () => {
           type={'number'}
           name={'amount'}
           id={'amount'}
+          step={'0.01'}
           onChange={(e) =>
             setFormValues(
               plainToInstance(
@@ -91,7 +93,7 @@ export const EditGoal = () => {
             )
           }
           value={formValues.amount}
-          className={'border p-2'}
+          className={'form-input'}
         />
         {formErrors.amount && (
           <span className={'bg-amber-200'}>{formErrors.amount}</span>
@@ -109,35 +111,46 @@ export const EditGoal = () => {
             setFormValues(
               plainToInstance(
                 GoalFormObject,
-                Object.assign({}, formValues, { targetDate: e.target.value }),
+                Object.assign({}, formValues, {
+                  targetDate: new Date(e.target.value),
+                }),
               ),
             )
           }
           value={targetDateFormValue}
-          className={'border p-2'}
+          className={'form-input'}
         />
         {formErrors.targetDate && (
           <span className={'bg-amber-200'}>{formErrors.targetDate}</span>
         )}
       </div>
-      <select
-        name="recurrence"
-        value={formValues.recurrence}
-        onChange={(e) => {
-          setFormValues(
-            Object.assign({}, formValues, { recurrence: e.target.value }),
-          );
-        }}
-      >
-        <option value={GoalRecurrence.NEVER}>{GoalRecurrence.NEVER}</option>
-        <option value={GoalRecurrence.DAILY}>{GoalRecurrence.DAILY}</option>
-        <option value={GoalRecurrence.WEEKLY}>{GoalRecurrence.WEEKLY}</option>
-        <option value={GoalRecurrence.MONTHLY}>{GoalRecurrence.MONTHLY}</option>
-        <option value={GoalRecurrence.QUARTERLY}>
-          {GoalRecurrence.QUARTERLY}
-        </option>
-        <option value={GoalRecurrence.YEARLY}>{GoalRecurrence.YEARLY}</option>
-      </select>
+      <div className={'flex flex-col'}>
+        <label htmlFor={'recurrence'} className={'font-bold'}>
+          Target date
+        </label>
+        <select
+          name={'recurrence'}
+          id={'recurrence'}
+          value={formValues.recurrence}
+          className={'form-select'}
+          onChange={(e) => {
+            setFormValues(
+              Object.assign({}, formValues, { recurrence: e.target.value }),
+            );
+          }}
+        >
+          <option value={GoalRecurrence.NEVER}>{GoalRecurrence.NEVER}</option>
+          <option value={GoalRecurrence.DAILY}>{GoalRecurrence.DAILY}</option>
+          <option value={GoalRecurrence.WEEKLY}>{GoalRecurrence.WEEKLY}</option>
+          <option value={GoalRecurrence.MONTHLY}>
+            {GoalRecurrence.MONTHLY}
+          </option>
+          <option value={GoalRecurrence.QUARTERLY}>
+            {GoalRecurrence.QUARTERLY}
+          </option>
+          <option value={GoalRecurrence.YEARLY}>{GoalRecurrence.YEARLY}</option>
+        </select>
+      </div>
       <button
         className={primaryButton}
         disabled={Object.values(formErrors).length > 0}
@@ -170,12 +183,17 @@ export const NewGoal = () => {
         <span className={'bg-amber-200'}>{formErrors.name}</span>
       )}
       <label htmlFor={'amount'}>Amount</label>
-      <input className={'form-input'} type="number" name="amount" />
+      <input
+        className={'form-input'}
+        type={'number'}
+        name={'amount'}
+        step={'0.01'}
+      />
       {formErrors.amount && (
         <span className={'bg-amber-200'}>{formErrors.amount}</span>
       )}
       <label htmlFor={'recurrence'}>Recurrence</label>
-      <select className={'form-select'} name="recurrence">
+      <select className={'form-select'} name={'recurrence'} id={'recurrence'}>
         <option value={GoalRecurrence.NEVER}>{GoalRecurrence.NEVER}</option>
         <option value={GoalRecurrence.DAILY}>{GoalRecurrence.DAILY}</option>
         <option value={GoalRecurrence.WEEKLY}>{GoalRecurrence.WEEKLY}</option>
@@ -189,7 +207,12 @@ export const NewGoal = () => {
         <span className={'bg-amber-200'}>{formErrors.recurrence}</span>
       )}
       <label htmlFor={'targetDate'}>Target date</label>
-      <input className={'form-input'} type="date" name="targetDate" />
+      <input
+        className={'form-input'}
+        type={'date'}
+        name={'targetDate'}
+        id={'targetDate'}
+      />
       {formErrors.targetDate && (
         <span className={'bg-amber-200'}>{formErrors.targetDate}</span>
       )}

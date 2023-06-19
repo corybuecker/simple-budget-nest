@@ -5,6 +5,7 @@ import { createGoalAction, updateGoalAction } from '../actions/goals';
 import { GoalFormObject } from '../form_objects/goals';
 import { goalLoader, goalsLoader } from '../loaders/goals';
 import Nav from '../nav';
+import { primaryButton } from '../styles/buttons';
 import { EditGoal, NewGoal } from './goal';
 
 const Main = () => {
@@ -26,14 +27,21 @@ const ErrorBoundary = () => {
 
 export const Goals = () => {
   const goals = useLoaderData() as (GoalFormObject & { id: string })[];
+
   return (
     <div>
-      <Link to={'new'}>New</Link>
-      {goals.map((goal) => (
-        <div key={goal.id}>
-          <Link to={goal.id || ''}>Goal {goal.id}</Link>
-        </div>
-      ))}
+      <Link className={`${primaryButton} block max-w-xs`} to={'new'}>
+        New
+      </Link>
+      <div className={'flex flex-col'}>
+        {goals.map((goal) => (
+          <div key={goal.id} className={'flex gap-4'}>
+            <Link to={goal.id}>{goal.id}</Link>
+            <span>{goal.name}</span>
+            <span>{goal.amount}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
