@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Transform } from 'class-transformer';
 import { IsDate, IsEnum, IsNumber, IsPositive, Length } from 'class-validator';
-import { GoalRecurrence } from './types';
+import { Recurrence } from '../types';
 
 @Injectable()
 export class GoalDto {
@@ -13,8 +13,8 @@ export class GoalDto {
   @Transform(({ value }) => Number(value))
   public declare amount: number;
 
-  @IsEnum(GoalRecurrence)
-  public declare recurrence: GoalRecurrence;
+  @IsEnum(Recurrence)
+  public declare recurrence: Recurrence;
 
   @IsDate()
   @Transform(({ value }) => new Date(value as string))

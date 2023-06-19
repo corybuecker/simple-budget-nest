@@ -11,6 +11,7 @@ import { User } from '../users/user.model';
 @Injectable()
 export class SessionGuard implements CanActivate {
   constructor(@InjectModel(User) private userModel: typeof User) {}
+
   async canActivate(context: ExecutionContext) {
     const httpContext = context.switchToHttp();
     const request = httpContext.getRequest<Request>();

@@ -1,6 +1,5 @@
 import { plainToInstance } from 'class-transformer';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
-import * as React from 'react';
 import { useState } from 'react';
 import { Form, useLoaderData, useSubmit } from 'react-router-dom';
 import { AccountFormObject } from '../form_objects/accounts';

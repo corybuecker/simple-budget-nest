@@ -1,8 +1,7 @@
-import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import Element = React.JSX.Element;
+import { JSX } from 'react';
 
-const Nav = (): Element => {
+const Nav = (): JSX.Element => {
   const inactiveClass = [
     'text-white',
     'hover:bg-slate-600',

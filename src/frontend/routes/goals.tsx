@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
 import { ServerLoaderParams } from '../../shared/types';
 import { createGoalAction, updateGoalAction } from '../actions/goals';

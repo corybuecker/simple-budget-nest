@@ -1,35 +1,40 @@
 import { LoggerService } from '@nestjs/common/services/logger.service';
-import Decimal from 'decimal.js';
 import { differenceInDays, sub } from 'date-fns';
-import { Goal } from '../../goals/goal.model';
-import { GoalRecurrence } from '../../goals/types';
+import Decimal from 'decimal.js';
+import { Recurrence } from '../../types';
+
+type Amortizable = {
+  targetDate: Date;
+  amount: Decimal;
+  recurrence: Recurrence;
+  creationDate: Date;
+};
 
 export class Amortized {
   constructor(
-    private readonly goal: Goal,
+    private readonly amortizable: Amortizable,
     private readonly logger: LoggerService,
   ) {}
 
   public amountToDate() {
-    this.logger.log(this.goal.name);
-    this.logger.log(this.savedTodate());
-    return new Decimal(this.savedTodate());
+    this.logger.log(this.savedToDate());
+    return new Decimal(this.savedToDate());
   }
 
   private startDate() {
-    switch (this.goal.recurrence) {
-      case GoalRecurrence.NEVER:
-        return this.goal.creationDate;
-      case GoalRecurrence.DAILY:
-        return sub(this.goal.targetDate, { days: 1 });
-      case GoalRecurrence.WEEKLY:
-        return sub(this.goal.targetDate, { weeks: 1 });
-      case GoalRecurrence.MONTHLY:
-        return sub(this.goal.targetDate, { months: 1 });
-      case GoalRecurrence.QUARTERLY:
-        return sub(this.goal.targetDate, { months: 3 });
-      case GoalRecurrence.YEARLY:
-        return sub(this.goal.targetDate, { years: 1 });
+    switch (this.amortizable.recurrence) {
+      case Recurrence.NEVER:
+        return this.amortizable.creationDate;
+      case Recurrence.DAILY:
+        return sub(this.amortizable.targetDate, { days: 1 });
+      case Recurrence.WEEKLY:
+        return sub(this.amortizable.targetDate, { weeks: 1 });
+      case Recurrence.MONTHLY:
+        return sub(this.amortizable.targetDate, { months: 1 });
+      case Recurrence.QUARTERLY:
+        return sub(this.amortizable.targetDate, { months: 3 });
+      case Recurrence.YEARLY:
+        return sub(this.amortizable.targetDate, { years: 1 });
       default:
         throw Error('unknown recurrence');
     }
@@ -37,7 +42,7 @@ export class Amortized {
 
   private duration(): Interval {
     const start = this.startDate();
-    const end = this.goal.targetDate;
+    const end = this.amortizable.targetDate;
     return { start, end };
   }
 
@@ -52,10 +57,10 @@ export class Amortized {
   }
 
   private dailyAmountToSave() {
-    return Decimal.div(this.goal.amount, this.daysToSave());
+    return Decimal.div(this.amortizable.amount, this.daysToSave());
   }
 
-  private savedTodate() {
+  private savedToDate() {
     return Decimal.mul(this.dailyAmountToSave(), this.elapsedDays());
   }
 

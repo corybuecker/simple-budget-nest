@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';

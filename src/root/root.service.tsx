@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Request as ExpressRequest } from 'express';
-import * as React from 'react';
 import { StrictMode } from 'react';
 import { renderToString } from 'react-dom/server';
 import {
