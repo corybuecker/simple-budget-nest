@@ -108,7 +108,7 @@ export const EditAccount = () => {
         )}
       </div>
       <button
-        className={primaryButton}
+        className={primaryButton(['max-w-sm'])}
         disabled={Object.values(formErrors).length > 0}
         type="submit"
       >
@@ -166,7 +166,7 @@ export const NewAccount = () => {
           <label htmlFor={'debt'}>Debt</label>
         </fieldset>
         <button
-          className={primaryButton}
+          className={primaryButton(['shrink'])}
           disabled={Object.values(formErrors).length > 0}
           type="submit"
         >
