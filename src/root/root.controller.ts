@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Render,
-  Req,
-  UseFilters,
-  UseGuards,
-} from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Render, UseFilters, UseGuards } from '@nestjs/common';
 import { SessionGuard } from '../auth/session.guard';
 import { RootFilter } from './root.filter';
 import { RootService } from './root.service';
@@ -19,30 +11,30 @@ export class RootController {
 
   @Get('/')
   @Render('index')
-  public async root(@Req() request: Request) {
-    return { ssrContent: await this.rootService.pageContent(request) };
+  public root() {
+    return {};
   }
 
   @Get('/dashboard')
   @Render('index')
-  public async dashboard(@Req() request: Request) {
-    return { ssrContent: await this.rootService.pageContent(request) };
+  public dashboard() {
+    return {};
   }
   @Get('/accounts*')
   @Render('index')
-  public async accounts(@Req() request: Request) {
-    return { ssrContent: await this.rootService.pageContent(request) };
+  public accounts() {
+    return {};
   }
 
   @Get('/savings*')
   @Render('index')
-  public async savings(@Req() request: Request) {
-    return { ssrContent: await this.rootService.pageContent(request) };
+  public savings() {
+    return {};
   }
 
   @Get('/goals*')
   @Render('index')
-  public async goals(@Req() request: Request) {
-    return { ssrContent: await this.rootService.pageContent(request) };
+  public goals() {
+    return {};
   }
 }
