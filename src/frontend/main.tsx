@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
-import Nav from '../frontend/nav';
+import Nav from './nav';
 
 export const Main = () => {
   return (

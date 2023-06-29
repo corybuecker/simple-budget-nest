@@ -1,6 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 import { AccountFormObject } from '../form_objects/accounts';
 
 export const accountLoader = (serverParams?: ServerLoaderParams) => {

@@ -1,5 +1,5 @@
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 import { createGoalAction, updateGoalAction } from '../actions/goals';
 import { GoalFormObject } from '../form_objects/goals';
 import { goalLoader, goalsLoader } from '../loaders/goals';

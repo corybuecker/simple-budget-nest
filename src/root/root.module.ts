@@ -5,11 +5,10 @@ import { LoggerModule } from '../logger/logger.module';
 import { User } from '../users/user.model';
 import { RootController } from './root.controller';
 import { RootFilter } from './root.filter';
-import { RootService } from './root.service';
 
 @Module({
   controllers: [RootController],
-  providers: [RootService, RootFilter],
+  providers: [RootFilter],
   imports: [LoggerModule, AuthModule, SequelizeModule.forFeature([User])],
 })
 export class RootModule {}

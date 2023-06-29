@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 import { createSavingAction, updateSavingAction } from '../actions/savings';
 import { SavingFormObject } from '../form_objects/savings';
 import { savingLoader, savingsLoader } from '../loaders/savings';

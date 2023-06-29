@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, Outlet, useLoaderData, useRouteError } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 import Nav from '../nav';
 import { AccountFormObject } from '../form_objects/accounts';
 import { accountLoader, accountsLoader } from '../loaders/accounts';

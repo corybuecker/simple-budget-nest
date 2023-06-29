@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 
 export const dashboardLoader = (serverParams?: ServerLoaderParams) => {
   return async () => {

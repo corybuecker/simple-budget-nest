@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { generateRoutes } from '../shared/route_generator';
+import { generateRoutes } from './route_generator';
 
 const router = createBrowserRouter(generateRoutes());
 const mainElements = document.getElementsByTagName('main');

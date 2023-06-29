@@ -8,7 +8,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "jsx": "react-jsxdev",
     "incremental": true,
     "module": "CommonJS",
     "skipLibCheck": true,
@@ -18,9 +17,15 @@
   "include": [
     "./src"
   ],
+  "exclude": [
+    "./src/frontend"
+  ],
   "references": [
     {
       "path": "./migrations"
+    },
+    {
+      "path": "./src/frontend"
     }
   ]
 }

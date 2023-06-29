@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-html
+html(lang="en" style="scrollbar-gutter: stable;")
     head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(rel="apple-touch-icon" href="/apple-touch-icon.png")
+        link(rel="manifest" href="/site.webmanifest")
         link(href='/app.css' rel='stylesheet')
-    body
-        main
         // https://generator.jspm.io/#ZclNCsIwEEDhLMTbzDQRBXf2KmkySiQ/ZWZaeoHeu4jZiMv3vf1kzPkhqcyZYFriixRom5lETMheBJR9lWfjQjxavKHrvvqcotf2UXdFa5h8UIitjO6OF7RDyImqfr3bTwxv2SDSCrxUTYX+Zx8Hx1e1d6UA
         script(type="importmap" nonce="9k27shj183Hs1").
             {
@@ -89,3 +91,5 @@ html
               }
             }
         script(type='module' async src='/frontend.js')
+    body
+        main

@@ -1,6 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { LoaderFunctionArgs, redirect } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 import { SavingFormObject } from '../form_objects/savings';
 
 export const savingLoader = (serverParams?: ServerLoaderParams) => {

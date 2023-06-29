@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { ServerLoaderParams } from '../../shared/types';
+import { ServerLoaderParams } from '../types';
 import { dashboardLoader } from '../loaders/dashboard';
 import Nav from '../nav';
 
